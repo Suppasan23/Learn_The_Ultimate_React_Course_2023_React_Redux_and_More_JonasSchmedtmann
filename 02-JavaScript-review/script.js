@@ -141,7 +141,7 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
-const book = getBook(1);
+const book = getBook(2);
 
 console.log(book);
 
@@ -170,6 +170,10 @@ const {
 
 const summary = `"${title2}", a ${pages2}-page long book, was writen by "${author2}" and published in ${
   publicationDate2.split("-")[0]
-}`;
+}. The book has${hasMovieAdaptation ? " " : " not "}been adapted as a movie`;
 
 console.log(summary);
+
+const pagesRange = pages > 1000 ? "Over a thousand" : "Less than thousand";
+pagesRange;
+console.log(`The book has ${pagesRange} Pages`);
