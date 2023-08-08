@@ -143,33 +143,33 @@ function getBook(id) {
 
 const book = getBook(1);
 
+console.log(book);
+
 const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
   book;
 
-console.log(author, title, genres);
-
-const [primaryGenre, secondaryGenre, ...otherGenre] = genres;
-
-console.log(
-  primaryGenre,
-  secondaryGenre,
-  otherGenre[0],
-  otherGenre[1],
-  otherGenre[2],
-  otherGenre[3]
-);
-
-const newGenre = ["XXXXXXXX", ...genres];
-
-newGenre;
-
 const updatedBook = {
-  ...book,
-  // Adding a new property
-  moivePublicationDate: "2001-12-19",
-
-  // Overwrite an existing property
-  pages: 1210,
+  title2: `${title}2`,
+  author2: author,
+  pages2: 1500,
+  publicationDate2: "1960-02-17",
+  genres2: genres,
+  hasMovieAdaptation2: true,
 };
 
-updatedBook;
+console.log(updatedBook);
+
+const {
+  title2,
+  author2,
+  pages2,
+  publicationDate2,
+  genres2,
+  hasMovieAdaptation2,
+} = updatedBook;
+
+const summary = `"${title2}", a ${pages2}-page long book, was writen by "${author2}" and published in ${
+  publicationDate2.split("-")[0]
+}`;
+
+console.log(summary);
