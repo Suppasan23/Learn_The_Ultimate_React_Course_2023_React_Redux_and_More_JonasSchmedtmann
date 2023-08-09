@@ -141,7 +141,7 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
-const book = getBook(2);
+const book = getBook(3);
 
 console.log(book);
 
@@ -168,12 +168,47 @@ const {
   hasMovieAdaptation2,
 } = updatedBook;
 
-const summary = `"${title2}", a ${pages2}-page long book, was writen by "${author2}" and published in ${
-  publicationDate2.split("-")[0]
-}. The book has${hasMovieAdaptation ? " " : " not "}been adapted as a movie`;
+const getYear2 = (str) => str.split("-")[0];
+console.log(getYear2(publicationDate2));
+
+const summary = `"${title2}", a ${pages2}-page long book, was writen by "${author2}" and published in ${getYear2(
+  publicationDate2
+)}. The book has${hasMovieAdaptation ? " " : " not "}been adapted as a movie`;
 
 console.log(summary);
 
 const pagesRange = pages > 1000 ? "Over a thousand" : "Less than thousand";
 pagesRange;
 console.log(`The book has ${pagesRange} Pages`);
+
+//console.log(Condition && Action);
+console.log(true && "Some String");
+console.log(false && "Some String");
+
+console.log(hasMovieAdaptation2 && "This book has a movie");
+
+console.log("jonas" && "Some String");
+console.log(0 && "Some String");
+
+//console.log(Condition || Action);
+console.log(true || "Some String");
+console.log(false || "Some String");
+
+console.log(book.translations.spanish);
+
+const spanishTranslation = book.translations.spanish || "NOT TRANSLATED";
+spanishTranslation;
+
+//console.log(book.reviews.librarything.reviewsCount);
+//const countWrong = book.reviews.librarything.reviewsCount || "no data";
+//countWrong;
+
+function getTotalReviewCount(book) {
+  const goodread = book.reviews?.goodreads?.reviewsCount ?? 0;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  librarything;
+
+  return goodread + librarything;
+}
+
+console.log(getTotalReviewCount(book));
