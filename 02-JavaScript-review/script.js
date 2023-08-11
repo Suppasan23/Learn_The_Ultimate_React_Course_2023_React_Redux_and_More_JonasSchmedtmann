@@ -66,7 +66,7 @@ const data = [
     publicationDate: "1965-01-01",
     author: "Frank Herbert",
     genres: ["science fiction", "novel", "adventure"],
-    hasMovieAdaptation: true,
+    hasMovieAdaptation: false,
     pages: 658,
     translations: {
       spanish: "",
@@ -136,11 +136,15 @@ const data = [
 ];
 
 // Destructuring
+function getBooks() {
+  return data;
+}
 
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
+/*
 const book = getBook(3);
 
 console.log(book);
@@ -212,3 +216,77 @@ function getTotalReviewCount(book) {
 }
 
 console.log(getTotalReviewCount(book));
+*/
+
+const books = getBooks();
+
+function getTotalReviewCount(book) {
+  const goodread = book.reviews?.goodreads?.reviewsCount ?? 0;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0;
+  goodread;
+  librarything;
+  return goodread + librarything;
+}
+
+const x = [1, 2, 3, 4, 5].map((el) => el * 2);
+console.log(x);
+
+const title = books.map((book) => book.title);
+title;
+
+const essentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+  reviewsCount: getTotalReviewCount(book),
+}));
+
+essentialData;
+
+const longBooksWithMoive = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+longBooksWithMoive;
+
+const adventureBooks = books
+  .filter((book) => book.genres.includes("adventure"))
+  .map((book) => book.title);
+
+adventureBooks;
+
+const pagesAllBooks = books.reduce((sum, book) => sum + book.pages, 0);
+pagesAllBooks;
+
+const arr = [3, 7, 1, 9, 6];
+const sorted = arr.slice().sort((a, b) => a - b);
+sorted;
+arr;
+
+const sortedByPages = books
+  .slice()
+  .sort((a, b) => b.pages - a.pages)
+  .map((book) => ({
+    title: book.title,
+    Pages: book.pages,
+  }));
+sortedByPages;
+
+// 1) Add book object to array
+const newBook = {
+  id: 6,
+  title: "Harry Potter and the Chamber of Secrets",
+  author: "J. K. Rowling",
+};
+
+const afterAddBook = [...books, newBook];
+afterAddBook;
+
+// 2) Delete book object from array
+const afterDeleteBook = afterAddBook.filter((book) => book.id != 3);
+afterDeleteBook;
+
+// 3) Update book object in the array
+const afterUpdateBook = afterDeleteBook.map((book) =>
+  book.id === 5 ? { ...book, title: "Moby Dick", pages: 1210 } : book
+);
+
+afterUpdateBook;
