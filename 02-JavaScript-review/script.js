@@ -144,7 +144,6 @@ function getBook(id) {
   return data.find((d) => d.id === id);
 }
 
-/*
 const book = getBook(3);
 
 console.log(book);
@@ -216,8 +215,7 @@ function getTotalReviewCount(book) {
 }
 
 console.log(getTotalReviewCount(book));
-*/
-/*
+
 const books = getBooks();
 
 function getTotalReviewCount(book) {
@@ -290,15 +288,12 @@ const afterUpdateBook = afterDeleteBook.map((book) =>
 );
 
 afterUpdateBook;
-*/
 
-
-/* fetch("https://jsonplaceholder.typicode.com/todos")
-.then((res) => res.json())
-.then((data) => console.log(data));
+fetch("https://jsonplaceholder.typicode.com/todos")
+  .then((res) => res.json())
+  .then((data) => console.log(data));
 
 console.log("jonas");
- */
 
 async function getToDos() {
   const res = await fetch("https://jsonplaceholder.typicode.com/todos");
