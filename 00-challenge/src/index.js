@@ -3,6 +3,45 @@ import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
 import "./style.css";
 
+const skillData = [
+  {
+    skill: "Sword",
+    emoji: "⚔️",
+    level: "advanced",
+    color: "#B03A2E",
+  },
+  {
+    skill: "Axe",
+    emoji: "🪓",
+    level: "Intermediate",
+    color: "#1A5276",
+  },
+  {
+    skill: "Bow",
+    emoji: "🏹",
+    level: "beginner",
+    color: "#0E6655",
+  },
+  {
+    skill: "Shield",
+    emoji: "🛡️",
+    level: "advanced",
+    color: "#B7950B",
+  },
+  {
+    skill: "Magic",
+    emoji: "☄️",
+    level: "Intermediate",
+    color: "#5D6D7E",
+  },
+  {
+    skill: "Summon",
+    emoji: "🦄",
+    level: "beginner",
+    color: "#A569BD",
+  },
+];
+
 function App() {
   return (
     <div className="card">
@@ -32,7 +71,7 @@ function Avatar(props) {
 function Intro() {
   return (
     <>
-      <h1>Brave Man</h1>
+      <h1>The Black Worrior</h1>
       <p>
         A "brave man" refers to an individual who displays courage and
         fearlessness in the face of challenges, danger, or adversity.
@@ -43,23 +82,37 @@ function Intro() {
 
 function SkillList() {
   return (
-    <div className="skill-list">
-      <Skill skill="Sword" emoji="⚔️" color="#B03A2E" />
-      <Skill skill="Axe" emoji="🪓" color="#1A5276" />
-      <Skill skill="Bow" emoji="🏹" color="#0E6655" />
-      <Skill skill="Shield" emoji="🛡️" color="#B7950B" />
-      <Skill skill="Magic" emoji="☄️" color="#5D6D7E" />
-      <Skill skill="Summon" emoji="🦄" color="#A569BD" />
-    </div>
+    <>
+      {skillData.length > 0 ? (
+        <ul className="skill-list">
+          {skillData.map((eachSkill, index) => (
+            <Skill
+              skill={eachSkill.skill}
+              emoji={eachSkill.emoji}
+              level={eachSkill.level}
+              color={eachSkill.color}
+              key={index}
+            />
+          ))}
+        </ul>
+      ) : (
+        <p>Data not found</p>
+      )}
+    </>
   );
 }
 
-function Skill(props) {
+function Skill({ skill, emoji, level, color }) {
   return (
-    <div className="skill" style={{ backgroundColor: props.color }}>
-      <span>{props.skill}</span>
-      <span>{props.emoji}</span>
-    </div>
+    <li className="skill" style={{ backgroundColor: color }}>
+      <span>{emoji}</span>
+      <span>{skill}</span>
+      <span>
+        {level === "advanced" && "💪"}
+        {level === "Intermediate" && "👍"}
+        {level === "beginner" && "👶"}
+      </span>
+    </li>
   );
 }
 
