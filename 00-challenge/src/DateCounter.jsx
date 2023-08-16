@@ -76,7 +76,7 @@ export default function DateCounter() {
 
       <div>
         <p style={{ fontSize: 20 }}>
-          {count} days from today = {theDate.getDate()}/{theDate.getMonth() + 1}
+          {count ===0 ? "Today is" : `${count} days from today`} = {theDate.getDate()}/{theDate.getMonth() + 1}
           /{theDate.getFullYear()}
         </p>
       </div>
