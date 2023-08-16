@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
 import "./style.css";
@@ -44,12 +44,17 @@ const skillData = [
 
 function App() {
   return (
-    <div className="card">
-      <Avatar image="avatar/sigma-men.jpg" />
+    <div className="app-container">
+      <div className="card">
+        <Avatar image="avatar/sigma-men.jpg" />
 
-      <div className="data">
-        <Intro />
-        <SkillList />
+        <div className="data">
+          <Intro />
+          <SkillList />
+        </div>
+      </div>
+      <div className="card">
+        <OpenTheDoor />
       </div>
     </div>
   );
@@ -113,6 +118,23 @@ function Skill({ skill, emoji, level, color }) {
         {level === "beginner" && "👶"}
       </span>
     </li>
+  );
+}
+
+function OpenTheDoor() {
+  const [doorState, setDoorState] = useState(true);
+
+  return (
+    <>
+      <div>
+        <img
+          onClick={() => setDoorState((door) => !door)}
+          src={doorState ? "avatar/dooropen.jpg" : "avatar/doorclose.jpg"}
+          alt={doorState ? "dooropen" : "doorclose"}
+          width={300}
+        ></img>
+      </div>
+    </>
   );
 }
 
