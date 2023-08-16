@@ -12,6 +12,15 @@ const messages = [
 ];
 
 export default function App() {
+  return (
+    <div>
+      <Step />
+      <Step />
+    </div>
+  );
+}
+
+function Step() {
   const [step, setStep] = useState(0);
   const [emoji, setEmoji] = useState("");
   const [isOpen, setIsOpen] = useState(true);
@@ -33,7 +42,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <div>
       <button className="close" onClick={() => setIsOpen((isOp) => !isOp)}>
         &times;
       </button>
@@ -68,6 +77,6 @@ export default function App() {
           </div>
         </div>
       )}
-    </> //for IsOpen
+    </div> //for IsOpen
   );
 }
