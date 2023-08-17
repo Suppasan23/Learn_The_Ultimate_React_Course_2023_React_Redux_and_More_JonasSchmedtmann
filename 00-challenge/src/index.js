@@ -1,9 +1,10 @@
 import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
 import "./style.css";
-import CardSkill from "./CardSkill";
-import OpenTheDoor from "./OpenTheDoor";
-import DateCounter from "./DateCounter";
+import CardSkill from "./CardSkill/CardSkill.jsx";
+import OpenTheDoor from "./OpenTheDoor/OpenTheDoor";
+import DateCounter from "./DateCounter/DateCounter";
+import FlashCards from "./FlashCards/FlashCards";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
       </div>
       <div className="box">
         <DateCounter />
+      </div>
+      <div className="box">
+        <FlashCards />
       </div>
     </div>
   );
