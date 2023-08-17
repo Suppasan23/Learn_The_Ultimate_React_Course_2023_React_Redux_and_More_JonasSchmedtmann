@@ -3,16 +3,24 @@ import { useState } from "react";
 export default function App() {
   const [theItem, setTheItem] = useState([]);
 
-  function handleAddItem(recievedItem) {
-    setTheItem((t) => [...t, recievedItem]);
+  function handleAddItem(recievedItemToAdd) {
+    setTheItem((t) => [...t, recievedItemToAdd]);
+  }
+
+  function handleRemoveItem(recievedItemToDelete) {
+    setTheItem((t)=>t.filter((tt) => tt.id !== recievedItemToDelete));
+  }
+
+  function handleCheckBoxItemChange(recievedItemToChangeCheckBox){
+    setTheItem((t)=>t.map((tt) => tt.id === recievedItemToChangeCheckBox ? { ...tt, packed : !tt.packed} : tt));
   }
 
   return (
     <div className="app">
       <Logo />
-      <Form onAddItem={handleAddItem} />
-      <PackingList theItem={theItem} />
-      <State />
+      <Form handleAddItem={handleAddItem} />
+      <PackingList theItem={theItem} handleRemoveItem={handleRemoveItem} handleCheckBoxItemChange={handleCheckBoxItemChange}/>
+      <State theItem={theItem}/>
     </div>
   );
 }
@@ -21,7 +29,7 @@ function Logo() {
   return <h1>🌴 Far Away</h1>;
 }
 
-function Form({ onAddItem }) {
+function Form({ handleAddItem }) {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 
@@ -32,7 +40,7 @@ function Form({ onAddItem }) {
 
     const newItemObj = { description, quantity, packed: false, id: Date.now() };
 
-    onAddItem(newItemObj);
+    handleAddItem(newItemObj);
 
     setDescription("");
     setQuantity(1);
@@ -67,34 +75,45 @@ function Form({ onAddItem }) {
   );
 }
 
-function PackingList({ theItem }) {
+function PackingList({ theItem, handleRemoveItem, handleCheckBoxItemChange }) {
   return (
     <div className="list">
       <ul>
         {theItem.map((eachItem) => (
-          <Item item={eachItem} key={eachItem.id} />
+          <Item item={eachItem} key={eachItem.id} handleRemoveItem={handleRemoveItem} handleCheckBoxItemChange={handleCheckBoxItemChange}/>
         ))}
       </ul>
     </div>
   );
 }
 
-function Item({ item }) {
+function Item({ item, handleRemoveItem, handleCheckBoxItemChange }) {
   return (
-    <li>
+    <li >
+      <input type='checkbox' value={item.packed} onChange={()=>handleCheckBoxItemChange(item.id)}></input>
       <span style={{ textDecoration: item.packed && "Line-through" }}>
         {item.quantity}&nbsp;
         {item.description}
       </span>
-      <button>❌</button>
+      <button onClick={()=>handleRemoveItem(item.id)}>❌</button>
     </li>
   );
 }
 
-function State() {
+function State({theItem}) {
+
+  if(!theItem.length) return <p className="status"><em>Start adding some items to your packing list 🚀</em></p>
+
+  const numItems = theItem.length;
+  const processItems = theItem.filter((ff) => ff.packed).length;
+  const percentage = Math.round((processItems / numItems) * 100)
+
   return (
-    <footer>
-      <em>🎡 You have X item on your list, and you already packed X (X%)</em>
+    <footer className="status">
+      <em>{percentage === 100 ? `You got everything ready to go ✈` :
+         `🎡 You have ${numItems} item on your list, and you already packed ${processItems} ea (${percentage})%`
+        }
+      </em>
     </footer>
   );
 }
