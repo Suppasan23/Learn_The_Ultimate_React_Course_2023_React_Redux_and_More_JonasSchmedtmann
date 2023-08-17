@@ -8,20 +8,17 @@ export default function DateCounter() {
 
   theDate.setDate(theDate.getDate() + count);
 
-  function handleSetStep(increment) {
-    if (increment) {
-      setStep((s) => s + 1);
-    } else {
-      step > 1 && setStep((s) => s - 1);
-    }
+  function handleSetStep(receiveValue) {
+    setStep(receiveValue);
   }
 
-  function handleSetCount(increment) {
-    if (increment) {
-      setCount((c) => c + step);
-    } else {
-      setCount((c) => c - step);
-    }
+  function handleSetCount(receiveValue) {
+    setCount(receiveValue);
+  }
+
+  function handleReset() {
+    setStep(1);
+    setCount(0);
   }
 
   return (
@@ -30,40 +27,31 @@ export default function DateCounter() {
       <br />
 
       <div>
-        <button
-          onClick={() => handleSetStep(false)}
-          style={{ fontSize: 30, width: 40, height: 40 }}
-        >
-          -
-        </button>
-        <span
-          style={{
-            backgroundColor: "#ADD8E6",
-            padding: 5,
-          }}
-        >
-          Step:{step}
-        </span>
-        <button
-          onClick={() => handleSetStep(true)}
-          style={{ fontSize: 30, width: 40, height: 40 }}
-        >
-          +
-        </button>
+        <input
+          type="range"
+          min="1"
+          max="10"
+          value={step}
+          onChange={(e) => handleSetStep(Number(e.target.value))}
+        />
+        <span>{step}</span>
       </div>
 
       <div>
         <button
-          onClick={() => handleSetCount(false)}
+          onClick={() => setCount((c) => c - step)}
           style={{ fontSize: 30, width: 40, height: 40 }}
         >
           -
         </button>
-        <span style={{ backgroundColor: "#90EE90", padding: 5 }}>
-          Count:{count}
-        </span>
+        <input
+          style={{ backgroundColor: "#90EE90", padding: 5, fontSize: 15 }}
+          type="text"
+          value={count}
+          onChange={(e) => handleSetCount(Number(e.target.value))}
+        ></input>
         <button
-          onClick={() => handleSetCount(true)}
+          onClick={() => setCount((c) => c + step)}
           style={{ fontSize: 30, width: 40, height: 40 }}
         >
           +
@@ -80,6 +68,12 @@ export default function DateCounter() {
           {theDate.getDate()}/{theDate.getMonth() + 1}/{theDate.getFullYear()}
         </p>
       </div>
+
+      {(count !== 0 || step !== 1) && (
+        <div>
+          <button onClick={handleReset}>Reset</button>
+        </div>
+      )}
     </>
   );
 }
