@@ -15,11 +15,17 @@ export default function App() {
     setTheItem((t)=>t.map((tt) => tt.id === recievedItemToChangeCheckBox ? { ...tt, packed : !tt.packed} : tt));
   }
 
+  function clearAllItems(){
+    const confirm = window.confirm('Are you sure you want to delete all items>');
+
+    if(confirm) setTheItem([]);
+  }
+
   return (
     <div className="app">
       <Logo />
       <Form handleAddItem={handleAddItem} />
-      <PackingList theItem={theItem} handleRemoveItem={handleRemoveItem} handleCheckBoxItemChange={handleCheckBoxItemChange}/>
+      <PackingList theItem={theItem} handleRemoveItem={handleRemoveItem} handleCheckBoxItemChange={handleCheckBoxItemChange} clearAllItems={clearAllItems}/>
       <State theItem={theItem}/>
     </div>
   );
@@ -75,14 +81,36 @@ function Form({ handleAddItem }) {
   );
 }
 
-function PackingList({ theItem, handleRemoveItem, handleCheckBoxItemChange }) {
+function PackingList({ theItem, handleRemoveItem, handleCheckBoxItemChange, clearAllItems }) {
+
+  const [sortBy, setSortBy] = useState('input')
+
+  let sortedItems;
+
+  if (sortBy === 'input') sortedItems = theItem;
+
+  if(sortBy === 'description') sortedItems = theItem.slice().sort((a,b) => a.description.localeCompare(b.description));
+
+  if(sortBy === 'packed') sortedItems = theItem.slice().sort((a,b) => Number(a.packed) - Number(b.packed));
+
   return (
     <div className="list">
       <ul>
-        {theItem.map((eachItem) => (
+        {sortedItems.map((eachItem) => (
           <Item item={eachItem} key={eachItem.id} handleRemoveItem={handleRemoveItem} handleCheckBoxItemChange={handleCheckBoxItemChange}/>
         ))}
       </ul>
+
+      <div className="actions">
+        <select value={sortBy} onChange={(e)=>setSortBy(e.target.value)}>
+          <option value='input'>Sort by input order</option>
+          <option value='description'>Sort by description</option>
+          <option value='packed'>Sort by packed status</option>
+        </select>
+
+        <button onClick={()=>clearAllItems()}>Clear list</button>
+
+      </div>
     </div>
   );
 }
