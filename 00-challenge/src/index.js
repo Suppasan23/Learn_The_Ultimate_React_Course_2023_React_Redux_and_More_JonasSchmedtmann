@@ -5,6 +5,7 @@ import CardSkill from "./CardSkill/CardSkill.jsx";
 import OpenTheDoor from "./OpenTheDoor/OpenTheDoor";
 import DateCounter from "./DateCounter/DateCounter";
 import FlashCards from "./FlashCards/FlashCards";
+import Accordion from "./Accordion/Accordion";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
       </div>
       <div className="box">
         <FlashCards />
+      </div>
+      <div className="box">
+        <Accordion />
       </div>
     </div>
   );

@@ -46,13 +46,16 @@ export default function FlashCards() {
     }
   }
 
-  return (
+return (
+  <>
+    <h3>Flash Card</h3>
+    <br/>
     <div className="flashcards">
       {questions.map((eachQuestion) => (
         <div
-          key={eachQuestion.id}
-          onClick={() => handleClick(eachQuestion.id)}
-          className={eachQuestion.id === selectedId ? "selected" : "flashcards"}
+        key={eachQuestion.id}
+        onClick={() => handleClick(eachQuestion.id)}
+        className={eachQuestion.id === selectedId ? "selected" : "flashcards"}
         >
           <p>
             {eachQuestion.id === selectedId
@@ -62,5 +65,6 @@ export default function FlashCards() {
         </div>
       ))}
     </div>
+  </>
   );
 }
