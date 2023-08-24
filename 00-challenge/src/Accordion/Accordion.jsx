@@ -20,6 +20,8 @@ const faqs = [
 ];
 
 export default function Accordion() {
+
+    const [whichOpen, setWhichOpen] = useState(null);
     
     return (
         <>
@@ -27,9 +29,14 @@ export default function Accordion() {
             <div className="accordion">
                 <ul className="content-box">
                 {faqs.map((eachFaqs, index) => (
-                    <Item   faqs={eachFaqs}
+                    <Item   key={index}
                             index={index}
-                    />
+                            title={eachFaqs.title}
+                            whichOpen={whichOpen}
+                            setWhichOpen={setWhichOpen}
+                    >
+                            {eachFaqs.text}
+                    </Item>
                 ))}
                 </ul>
             </div>
@@ -37,18 +44,28 @@ export default function Accordion() {
     )
 }
 
+function Item({index, title, whichOpen, setWhichOpen, children}){
 
-function Item({faqs, index}){
+    const isOpen = index === whichOpen;
 
-    const [isOpen, setIsOpen] = useState(false);
+    function toggleOpen(){
+        if (index === whichOpen)
+        {
+            setWhichOpen(null)
+        }
+        else
+        {
+            setWhichOpen(index)
+        }
+    }
 
     return(
         <>
-            <li className={`item ${isOpen && "open"}`} onClick={() => setIsOpen((s) => s = !isOpen)}>
+            <li className={`item ${isOpen && "open"}`} onClick={() => toggleOpen()}>
                 <h4 className="number">{index < 9 ? `0${index + 1}` : index + 1}</h4>
-                <h4 className="title">{faqs.title}</h4>
+                <h4 className="title">{title}</h4>
                 <h4 className="icon">{isOpen ? "-" : "+"}</h4>
-                {isOpen && <p className="content-box">{faqs.text}</p>}
+                {isOpen && <p className="content-box">{children}</p>}
             </li>
         </>
     )
