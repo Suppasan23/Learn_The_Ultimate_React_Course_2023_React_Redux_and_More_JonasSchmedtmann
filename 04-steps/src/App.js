@@ -15,7 +15,6 @@ export default function App() {
   return (
     <div>
       <Step />
-      {/*<Step />*/}
     </div>
   );
 }
@@ -57,10 +56,12 @@ function Step() {
             ))}
           </div>
 
-          <p className="message">
-            Step {step + 1}:{messages[step]}
-            {emoji}
-          </p>
+          <StepMessage 
+              step={step}>
+              {messages[step]}
+              {emoji}
+          </StepMessage>
+
           <div className="buttons">
               <Button bgColor='#7950f2'
                       textColor='#FFF'
@@ -72,7 +73,6 @@ function Step() {
                       onClick={handleNext}>
                       Next <span>👉🏼</span>
               </Button>
-              
           </div>
         </div>
       )}
@@ -80,12 +80,19 @@ function Step() {
   );
 }
 
+function StepMessage({step, children}) {
+  return(
+    <div className="message">
+      <h3>Step {step + 1}</h3>
+      {children}
+    </div>)
+}
 
 function Button({textColor, bgColor, onClick, children}) {
   return (
-  <button 
-    style={{ backgroundColor: bgColor, color: textColor }}
-    onClick={onClick}>
-    {children}
-  </button>)
+    <button 
+      style={{ backgroundColor: bgColor, color: textColor }}
+      onClick={onClick}>
+      {children}
+    </button>)
 }
