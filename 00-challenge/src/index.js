@@ -6,6 +6,7 @@ import OpenTheDoor from "./OpenTheDoor/OpenTheDoor";
 import DateCounter from "./DateCounter/DateCounter";
 import FlashCards from "./FlashCards/FlashCards";
 import Accordion from "./Accordion/Accordion";
+import TipCalculator from "./TipCalculator/TipCalculator";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
       </div>
       <div className="box">
         <Accordion />
+      </div>
+      <div className="box">
+        <TipCalculator />
       </div>
     </div>
   );
