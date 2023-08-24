@@ -15,7 +15,7 @@ export default function App() {
   return (
     <div>
       <Step />
-      <Step />
+      {/*<Step />*/}
     </div>
   );
 }
@@ -62,21 +62,30 @@ function Step() {
             {emoji}
           </p>
           <div className="buttons">
-            <button
-              style={{ backgroundColor: "#7950f2", color: "#FFFFFF" }}
-              onClick={handlePrevious}
-            >
-              Previous
-            </button>
-            <button
-              style={{ backgroundColor: "#7950f2", color: "#FFFFFF" }}
-              onClick={handleNext}
-            >
-              Next
-            </button>
+              <Button bgColor='#7950f2'
+                      textColor='#FFF'
+                      onClick={handlePrevious}>
+                      <span>👈🏼</span> Next 
+              </Button>
+              <Button bgColor='#7950f2'
+                      textColor='#FFF'
+                      onClick={handleNext}>
+                      Next <span>👉🏼</span>
+              </Button>
+              
           </div>
         </div>
       )}
     </div> //for IsOpen
   );
+}
+
+
+function Button({textColor, bgColor, onClick, children}) {
+  return (
+  <button 
+    style={{ backgroundColor: bgColor, color: textColor }}
+    onClick={onClick}>
+    {children}
+  </button>)
 }
