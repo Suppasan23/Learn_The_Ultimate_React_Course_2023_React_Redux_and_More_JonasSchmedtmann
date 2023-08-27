@@ -52,24 +52,34 @@ const average = (arr) =>
 
 ////////////////////////////// [index.js] ← App //////////////////////////////
 export default function App() {
+  const [movies, setMovies] = useState(tempMovieData);
+
   return (
     <>
-      <NavBar/>
-      <Main />
+      <NavBar>
+        <Search />
+        <NumResult movies={movies}/></NavBar>
+
+      <Main>      
+        <ListBox>
+          <MoiveList movies={movies}/></ListBox>
+        <WatchedBox /></Main>
     </>
   )
 }
 
+
 ////////////////////////////// App ← NavBar //////////////////////////////
-function NavBar(){
+function NavBar({children}){
+
   return (      
     <nav className="nav-bar">
       <Logo />
-      <Search />
-      <NumResult />
+      {children}
     </nav>
   )
 }
+
 
 ////////////////////////////// App ← NavBar ← Logo //////////////////////////////
 function Logo(){
@@ -80,6 +90,7 @@ function Logo(){
       </div>
   )
 }
+
 
 ////////////////////////////// App ← NavBar ← Search //////////////////////////////
 function Search(){
@@ -96,29 +107,29 @@ function Search(){
   )
 }
 
+
 ////////////////////////////// App ← NavBar ← NumResult //////////////////////////////
-function NumResult(){
+function NumResult({movies}){
   return(
     <p className="num-results">
-    Found <strong>X</strong> results
+    Found <strong>{movies.length}</strong> results
     </p>
   )
 }
 
 
 ////////////////////////////// App ← Main //////////////////////////////
-function Main(){
+function Main({children}){
   return(
     <main className="main">
-      <ListBox />
-      <WatchedBox />
+      {children}
     </main>
   )
 }
 
 
 ////////////////////////////// App ← Main ← ListBox //////////////////////////////
-function ListBox() {
+function ListBox({children}) {
   
   const [isOpen1, setIsOpen1] = useState(true);
 
@@ -131,16 +142,15 @@ function ListBox() {
       {isOpen1 ? "–" : "+"}
     </button>
 
-      {isOpen1 && <MoiveList />}
+      {isOpen1 && children}
 
   </div>
   )
 }
 
-////////////////////////////// App ← Main ← ListBox ← MoiveList //////////////////////////////
-function MoiveList() {
-  const [movies, setMovies] = useState(tempMovieData);
 
+////////////////////////////// App ← Main ← ListBox ← MoiveList //////////////////////////////
+function MoiveList({movies}) {
   return(
     <ul className="list">
         {movies?.map((movie) => (
@@ -149,6 +159,7 @@ function MoiveList() {
       </ul>
   )
 }
+
 
 ////////////////////////////// App ← Main ← ListBox ← MoiveList ← Moive //////////////////////////////
 function Movie({movie}) {
@@ -165,6 +176,7 @@ function Movie({movie}) {
     </li>
   )
 }
+
 
 ////////////////////////////// App ← Main ← WatchedBox //////////////////////////////
 function WatchedBox() {
@@ -221,6 +233,7 @@ function WatchedSummary({watched}) {
   )
 }
 
+
 ////////////////////////////// App ← Main ← WatchedBox ← WatchedMoiveList //////////////////////////////
 function WatchedMoiveList({watched}){
   return(
@@ -231,6 +244,7 @@ function WatchedMoiveList({watched}){
         </ul>
   )
 }
+
 
 ////////////////////////////// App ← Main ← WatchedBox ← WatchedMoiveList ← WatchedMoive //////////////////////////////
 function WatchedMovie({movie}) {
