@@ -53,17 +53,26 @@ const average = (arr) =>
 ////////////////////////////// [index.js] ← App //////////////////////////////
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
       <NavBar>
-        <Search />
-        <NumResult movies={movies}/></NavBar>
+        <Logo />
+        <Search/>
+        <NumResult movies={movies}/>
+      </NavBar>
 
       <Main>      
-        <ListBox>
-          <MoiveList movies={movies}/></ListBox>
-        <WatchedBox /></Main>
+        <Box>
+          <MoiveList movies={movies}/>
+        </Box>
+
+        <Box>   
+          <WatchedSummary watched={watched}/>
+          <WatchedMoiveList watched={watched}/>
+        </Box>
+      </Main>
     </>
   )
 }
@@ -74,7 +83,6 @@ function NavBar({children}){
 
   return (      
     <nav className="nav-bar">
-      <Logo />
       {children}
     </nav>
   )
@@ -128,26 +136,25 @@ function Main({children}){
 }
 
 
-////////////////////////////// App ← Main ← ListBox //////////////////////////////
-function ListBox({children}) {
+////////////////////////////// App ← Main ← Box //////////////////////////////
+function Box({children}) {
   
-  const [isOpen1, setIsOpen1] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
   return(
     <div className="box">
     <button
       className="btn-toggle"
-      onClick={() => setIsOpen1((open) => !open)}
+      onClick={() => setIsOpen((open) => !open)}
     >
-      {isOpen1 ? "–" : "+"}
+      {isOpen ? "–" : "+"}
     </button>
 
-      {isOpen1 && children}
+      {isOpen && children}
 
   </div>
   )
 }
-
 
 ////////////////////////////// App ← Main ← ListBox ← MoiveList //////////////////////////////
 function MoiveList({movies}) {
@@ -178,28 +185,7 @@ function Movie({movie}) {
 }
 
 
-////////////////////////////// App ← Main ← WatchedBox //////////////////////////////
-function WatchedBox() {
-  const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen2, setIsOpen2] = useState(true);
 
-  return (
-    <div className="box">
-      <button
-        className="btn-toggle"
-        onClick={() => setIsOpen2((open) => !open)}
-      >
-        {isOpen2 ? "–" : "+"}
-      </button>
-      {isOpen2 && (
-        <>       
-          <WatchedSummary watched={watched}/>
-          <WatchedMoiveList watched={watched}/>     
-        </>
-      )}
-    </div>
-  )
-}
 
 
 ////////////////////////////// App ← Main ← WatchedBox ← WatchedSummary //////////////////////////////
