@@ -7,28 +7,34 @@ import DateCounter from "./DateCounter/DateCounter";
 import FlashCards from "./FlashCards/FlashCards";
 import Accordion from "./Accordion/Accordion";
 import TipCalculator from "./TipCalculator/TipCalculator";
+import TextExpander from "./TextExpander/TextExpander";
 
 function App() {
   return (
     <div className="flex-container">
+
       <div className="box">
-        <CardSkill />
+        <TextExpander />
       </div>
       <div className="box">
-        <OpenTheDoor />
-      </div>
-      <div className="box">
-        <DateCounter />
-      </div>
-      <div className="box">
-        <FlashCards />
+        <TipCalculator />
       </div>
       <div className="box">
         <Accordion />
       </div>
       <div className="box">
-        <TipCalculator />
+        <FlashCards />
       </div>
+      <div className="box">
+        <DateCounter />
+      </div>
+      <div className="box">
+        <OpenTheDoor />
+      </div>
+      <div className="box">
+        <CardSkill />
+      </div>
+      
     </div>
   );
 }
