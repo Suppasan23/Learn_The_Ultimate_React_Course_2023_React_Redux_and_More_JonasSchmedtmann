@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const content = [
   {
@@ -43,11 +44,10 @@ function Tabbed({ content }) {
       </div>
 
       {activeTab <= 2 ? (
-        <TabContent item={content.at(activeTab)} />
+        <TabContent key={uuidv4()} item={content.at(activeTab)} />
       ) : (
         <DifferentContent />
       )}
-
     </div>
   );
 }
