@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const tempMovieData = [
   {
@@ -50,45 +50,10 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const theKey = '6e4b7af9';
-
 ////////////////////////////// [index.js] ← App //////////////////////////////
 export default function App() {
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const query = "wfwdwfwfwdw";
-
-  useEffect(function() 
-  {
-    async function fetchMovies()
-    {
-      try{
-        setIsLoading(true);
-
-        const res = await fetch(`http://www.omdbapi.com/?apikey=${theKey}&s=${query}`);
-  
-        if(!res.ok) throw new Error("Something went wrong with fetching movies")
-
-        const data = await res.json();
-
-        if(data.Response === 'False') throw new Error("Movie not found")
-  
-        setMovies(data.Search);
-        console.log(data)
-      }
-      catch (err) {
-        console.error(err.message)
-        setError(err.message)
-      }
-      finally{
-        setIsLoading(false);
-      }
-    }
-
-    fetchMovies()
-  }, []);
+  const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
@@ -100,9 +65,7 @@ export default function App() {
 
       <Main>      
         <Box>
-          {isLoading && <Loader/>}
-          {(!isLoading && !error) && <MoiveList movies={movies}/>}
-          {error && <ErrorMessage message={error}/>}
+          <MoiveList movies={movies}/>
         </Box>
 
         <Box>   
@@ -114,21 +77,6 @@ export default function App() {
   )
 }
 
-
-////////////////////////////// App ← Loader //////////////////////////////
-function Loader(){
-  return(
-    <p className="loader">Now Loading...</p>
-  )
-}
-
-function ErrorMessage({message}){
-  return(
-    <p className="error">
-      <span>⛔</span> {message}
-    </p>
-  )
-}
 
 ////////////////////////////// App ← NavBar //////////////////////////////
 function NavBar({children}){
@@ -235,6 +183,9 @@ function Movie({movie}) {
     </li>
   )
 }
+
+
+
 
 
 ////////////////////////////// App ← Main ← WatchedBox ← WatchedSummary //////////////////////////////
