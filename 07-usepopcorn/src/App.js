@@ -54,11 +54,28 @@ const theKey = '6e4b7af9';
 
 ////////////////////////////// [index.js] ← App //////////////////////////////
 export default function App() {
+  const [query, setQuery] = useState("Terminator");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const query = "wfwdwfwfwdw";
+  const [selectedId, setSelectedId] = useState("tt0103064");
+
+  /*
+  useEffect(function() {
+    console.log('After initial render')
+  }, [])
+
+  useEffect(function() {
+    console.log('After every render')
+  })
+
+  useEffect(function(){
+    console.log('When the "query" is re-render');
+  },[query])
+
+  console.log('During Render')
+  */
 
   useEffect(function() 
   {
@@ -66,35 +83,41 @@ export default function App() {
     {
       try{
         setIsLoading(true);
+        setError("");
 
         const res = await fetch(`http://www.omdbapi.com/?apikey=${theKey}&s=${query}`);
-  
-        if(!res.ok) throw new Error("Something went wrong with fetching movies")
+        
+        if(!res.ok) throw new Error("Something went wrong with fetching movies");
 
         const data = await res.json();
 
-        if(data.Response === 'False') throw new Error("Movie not found")
+        if(data.Response === 'False') throw new Error("Movie not found");
   
         setMovies(data.Search);
-        console.log(data)
       }
       catch (err) {
-        console.error(err.message)
-        setError(err.message)
+        console.error(err.message);
+        setError(err.message);
       }
       finally{
         setIsLoading(false);
       }
     }
 
+    if(query.length < 2){
+      setMovies([]);
+      setError("");
+      return;
+    }
+
     fetchMovies()
-  }, []);
+  }, [query]);
 
   return (
     <>
       <NavBar>
         <Logo />
-        <Search/>
+        <Search query={query} setQuery={setQuery}/>
         <NumResult movies={movies}/>
       </NavBar>
 
@@ -153,9 +176,7 @@ function Logo(){
 
 
 ////////////////////////////// App ← NavBar ← Search //////////////////////////////
-function Search(){
-  const [query, setQuery] = useState("");
-
+function Search({query, setQuery}){
   return(
       <input
       className="search"
