@@ -59,7 +59,7 @@ export default function App() {
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [selectedId, setSelectedId] = useState("tt0103064");
+  const [selectedId, setSelectedId] = useState(null);
 
   /*
   useEffect(function() {
@@ -76,6 +76,19 @@ export default function App() {
 
   console.log('During Render')
   */
+  function handleSelectMovie(id){
+    if(id === selectedId)
+    {
+      setSelectedId(null)
+    }else
+    {
+      setSelectedId(id)
+    }
+  }
+
+  function handleCloseMovie(){
+    setSelectedId(null)
+  }
 
   useEffect(function() 
   {
@@ -124,13 +137,24 @@ export default function App() {
       <Main>      
         <Box>
           {isLoading && <Loader/>}
-          {(!isLoading && !error) && <MoiveList movies={movies}/>}
+          {(!isLoading && !error) && <MoiveList movies={movies} onSelectMovie={handleSelectMovie}/>}
           {error && <ErrorMessage message={error}/>}
         </Box>
 
-        <Box>   
-          <WatchedSummary watched={watched}/>
-          <WatchedMoiveList watched={watched}/>
+        <Box>  
+          {
+            
+              selectedId ? (
+              <>
+                <MovieDetails selectedId={selectedId} onCloseMovie={handleCloseMovie}/> 
+              </>
+              ) : (
+              <>
+                <WatchedSummary watched={watched}/>
+                <WatchedMoiveList watched={watched}/>
+              </>
+              )
+          }
         </Box>
       </Main>
     </>
@@ -230,21 +254,20 @@ function Box({children}) {
 }
 
 ////////////////////////////// App ← Main ← ListBox ← MoiveList //////////////////////////////
-function MoiveList({movies}) {
+function MoiveList({movies, onSelectMovie}) {
   return(
-    <ul className="list">
+    <ul className="list list-movies">
         {movies?.map((movie) => (
-          <Movie movie={movie} key={movie.imdbID}/>
+          <Movie movie={movie} key={movie.imdbID} onSelectMovie={onSelectMovie}/>
         ))}
       </ul>
   )
 }
 
-
 ////////////////////////////// App ← Main ← ListBox ← MoiveList ← Moive //////////////////////////////
-function Movie({movie}) {
+function Movie({movie, onSelectMovie}) {
   return(
-    <li>
+    <li onClick={() => onSelectMovie(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
@@ -257,6 +280,14 @@ function Movie({movie}) {
   )
 }
 
+function MovieDetails({selectedId, onCloseMovie}) {
+  return(
+    <div className="details">
+      <button className="btn-back" onClick={onCloseMovie}>&larr;</button>
+      {selectedId}
+    </div>
+  )
+}
 
 ////////////////////////////// App ← Main ← WatchedBox ← WatchedSummary //////////////////////////////
 function WatchedSummary({watched}) {
