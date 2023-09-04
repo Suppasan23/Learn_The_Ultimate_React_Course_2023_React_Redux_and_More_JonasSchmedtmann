@@ -4,23 +4,23 @@ import StarRating from "./StarRating";
 const tempMovieData = [
   {
     imdbID: "tt1375666",
-    Title: "Inception",
-    Year: "2010",
-    Poster:
+    title: "Inception",
+    year: "2010",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
   },
   {
     imdbID: "tt0133093",
-    Title: "The Matrix",
-    Year: "1999",
-    Poster:
+    title: "The Matrix",
+    year: "1999",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
   },
   {
     imdbID: "tt6751668",
-    Title: "Parasite",
-    Year: "2019",
-    Poster:
+    title: "Parasite",
+    year: "2019",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
   },
 ];
@@ -28,9 +28,9 @@ const tempMovieData = [
 const tempWatchedData = [
   {
     imdbID: "tt1375666",
-    Title: "Inception",
-    Year: "2010",
-    Poster:
+    title: "Inception",
+    year: "2010",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
     runtime: 148,
     imdbRating: 8.8,
@@ -38,9 +38,9 @@ const tempWatchedData = [
   },
   {
     imdbID: "tt0088763",
-    Title: "Back to the Future",
-    Year: "1985",
-    Poster:
+    title: "Back to the Future",
+    year: "1985",
+    poster:
       "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
     runtime: 116,
     imdbRating: 8.5,
@@ -57,7 +57,7 @@ const theKey = "6e4b7af9";
 export default function App() {
   const [query, setQuery] = useState("Terminator");
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
@@ -87,6 +87,10 @@ export default function App() {
 
   function handleCloseMovie() {
     setSelectedId(null);
+  }
+
+  function handleAddWatched(movie){
+      setWatched((watched)=>[...watched, movie]);
   }
 
   useEffect(function () 
@@ -150,6 +154,7 @@ export default function App() {
               <MovieDetails
                 selectedId={selectedId}
                 onCloseMovie={handleCloseMovie}
+                onAddWatched={handleAddWatched}
               />
             </>
           ) : (
@@ -261,7 +266,7 @@ function Movie({ movie, onSelectMovie }) {
   );
 }
 
-function MovieDetails({ selectedId, onCloseMovie }) {
+function MovieDetails({ selectedId, onCloseMovie, onAddWatched }) {
 
   const [movie, setMoive] = useState({})
   const [isLoading, setIsLoading] = useState(false);
@@ -269,7 +274,7 @@ function MovieDetails({ selectedId, onCloseMovie }) {
     Title: title, 
     Year: year, 
     Poster: poster, 
-    Runtiome: runtime, 
+    Runtime: runtime, 
     imdbRating, 
     Plot: plot, 
     Released: released, 
@@ -278,7 +283,20 @@ function MovieDetails({ selectedId, onCloseMovie }) {
     Genre: genre 
   } = movie;
 
-  console.log(title, year);
+  function handleAdd(){
+    const newWatchMovie = {
+      imdbID: selectedId,
+      title,
+      year,
+      poster,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split(" ").at(0)),
+    };
+
+    onAddWatched(newWatchMovie);
+  }
+
+  console.log(movie);
 
   useEffect(function () 
   {
@@ -316,12 +334,16 @@ function MovieDetails({ selectedId, onCloseMovie }) {
         </headers>
 
         <section>
+
           <div className="rating">
-          <StarRating maxRating={10} size={24}/>
+            <StarRating maxRating={10} size={24}/>
+            <button className="btn-add" onClick={handleAdd}>+ Add to list</button>
           </div>
+
           <p><em>{plot}</em></p>
           <p>Starring {actors}</p>
           <p>Directed by {director}</p>
+
         </section>
       </>)
       } 
@@ -376,8 +398,8 @@ function WatchedMoiveList({ watched }) {
 function WatchedMovie({ movie }) {
   return (
     <li>
-      <img src={movie.Poster} alt={`${movie.Title} poster`} />
-      <h3>{movie.Title}</h3>
+      <img src={movie.poster} alt={`${movie.title} poster`} />
+      <h3>{movie.title}</h3>
       <div>
         <p>
           <span>⭐️</span>
