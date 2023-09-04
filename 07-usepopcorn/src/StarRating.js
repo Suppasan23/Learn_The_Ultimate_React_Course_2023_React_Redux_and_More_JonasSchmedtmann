@@ -16,7 +16,8 @@ StarRating.propTypes = {
     defaultRating: PropTypes.number,
     color: PropTypes.string,
     messages: PropTypes.array,
-    className: PropTypes.string
+    className: PropTypes.string,
+    onSetRating: PropTypes.func,
 }
 
 export default function StarRating({ 
@@ -26,6 +27,7 @@ export default function StarRating({
     className = "", 
     messages = [],
     defaultRating = 0,
+    onSetRating,
 })
     {
     const [staticRating, setStaticRating] = useState(defaultRating);
@@ -37,6 +39,11 @@ export default function StarRating({
         fontSize: `${size / 1.5 }px`
     }
 
+    function handleOnRate(getI) {
+        setStaticRating(getI + 1)
+        onSetRating(getI + 1);
+    }
+
     return (
         <div style={containerStyle} className={className}>
             <div style={starContainerStyle}>
@@ -45,7 +52,7 @@ export default function StarRating({
                     <Star 
                         key={i}
 
-                        onRate={() => setStaticRating(i + 1)}
+                        onRate={() => handleOnRate(i)}
                         onHoverInn={() => setDynamicRating(i + 1)}
                         onHoverOutt={() => setDynamicRating(staticRating)}
 
