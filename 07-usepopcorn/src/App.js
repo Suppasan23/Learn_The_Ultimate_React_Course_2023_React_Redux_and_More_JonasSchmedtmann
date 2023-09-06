@@ -55,28 +55,13 @@ const theKey = "6e4b7af9";
 
 ////////////////////////////// [index.js] ← App //////////////////////////////
 export default function App() {
-  const [query, setQuery] = useState("Terminator");
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
-  /*
-  useEffect(function() {
-    console.log('After initial render')
-  }, [])
-
-  useEffect(function() {
-    console.log('After every render')
-  })
-
-  useEffect(function(){
-    console.log('When the "query" is re-render');
-  },[query])
-
-  console.log('During Render')
-  */
   function handleSelectMovie(id) {
     if (id === selectedId) {
       setSelectedId(null);
@@ -97,16 +82,16 @@ export default function App() {
     setWatched((eachWatched) => eachWatched.filter((eachMovie) => eachMovie.imdbID !== deleteId))
   }
 
-  useEffect(function () 
-  {
-      async function fetchMovies() 
-      {
+  useEffect(() =>{
+    const controller = new AbortController();
+
+      async function fetchMovies() {
         try {
           setIsLoading(true);
           setError("");
 
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${theKey}&s=${query}`
+            `http://www.omdbapi.com/?apikey=${theKey}&s=${query}`, {signal: controller.signal}
           );
 
           if (!res.ok)
@@ -117,9 +102,13 @@ export default function App() {
           if (data.Response === "False") throw new Error("Movie not found");
 
           setMovies(data.Search);
+          setError("");
         } catch (err) {
-          console.error(err.message);
-          setError(err.message);
+          
+          if(err.name !== "AbortError"){
+            console.log(err.message);
+            setError(err.message);
+          }
         } finally {
           setIsLoading(false);
         }
@@ -131,9 +120,13 @@ export default function App() {
         return;
       }
 
+      handleCloseMovie();
       fetchMovies();
 
-    },[query]);
+      return function(){ // Return Clean-up data fetching
+        controller.abort();
+      };
+  },[query]);
 
   return (
     <>
@@ -310,23 +303,47 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     onCloseMovie();
   }
 
-  useEffect(function () 
-  {
-    async function getMovieDetails() 
-    {
-      setIsLoading(true)
+
+  useEffect(() =>{
+
+    async function getMovieDetails() {
+      setIsLoading(true);
       const res = await fetch(`http://www.omdbapi.com/?apikey=${theKey}&i=${selectedId}`);
       const data = await res.json();
-      setMoive(data)
-      setIsLoading(false)
+      setMoive(data);
+      setIsLoading(false);
     }
+
     getMovieDetails();
   }, [selectedId]);
 
 
+  useEffect(() =>{
 
+    if(!title) return;
+    document.title = `Movie | ${title}`;
 
+    return function() {  // return Clean-up function
+      document.title = "usePopcorn"
+    }
+  }, [title]);
+  
 
+  useEffect(() => {
+
+    function callback(e) {
+      if (e.code === 'Escape') {
+        onCloseMovie();
+      }
+    }
+  
+    document.addEventListener('keydown', callback); //แอด EventListener ทุกครั้ง
+  
+    return () => {
+      document.removeEventListener('keydown', callback); //ต้อง รีมูฟ EventListener ออกให้หมดทุกครั้ง
+    };
+  }, [onCloseMovie]);
+  
   return (
     <div className="details">
       {isLoading ? (<Loader />
@@ -379,7 +396,6 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
         </section>
       </>)
       } 
-          
     </div>
   );
 }
