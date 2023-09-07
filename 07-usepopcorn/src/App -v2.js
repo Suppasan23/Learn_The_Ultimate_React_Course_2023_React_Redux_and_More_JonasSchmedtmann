@@ -1,6 +1,53 @@
 import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
 
+const tempMovieData = [
+  {
+    imdbID: "tt1375666",
+    title: "Inception",
+    year: "2010",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+  },
+  {
+    imdbID: "tt0133093",
+    title: "The Matrix",
+    year: "1999",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+  },
+  {
+    imdbID: "tt6751668",
+    title: "Parasite",
+    year: "2019",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+  },
+];
+
+const tempWatchedData = [
+  {
+    imdbID: "tt1375666",
+    title: "Inception",
+    year: "2010",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+    runtime: 148,
+    imdbRating: 8.8,
+    userRating: 10,
+  },
+  {
+    imdbID: "tt0088763",
+    title: "Back to the Future",
+    year: "1985",
+    poster:
+      "https://m.media-amazon.com/images/M/MV5BZmU0M2Y1OGUtZjIxNi00ZjBkLTg1MjgtOWIyNThiZWIwYjRiXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg",
+    runtime: 116,
+    imdbRating: 8.5,
+    userRating: 9,
+  },
+];
+
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
@@ -8,17 +55,12 @@ const theKey = "6e4b7af9";
 
 ////////////////////////////// [index.js] ← App //////////////////////////////
 export default function App() {
-  const [query, setQuery] = useState("King");
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  
-  const [watched, setWatched] = useState(() => {
-    const storedValue = localStorage.getItem('watched');
-    return JSON.parse(storedValue);
-  });
-  //const [watched, setWatched] = useState([]);
 
   function handleSelectMovie(id) {
     if (id === selectedId) {
@@ -34,21 +76,13 @@ export default function App() {
 
   function handleAddWatched(movie){
     setWatched((watched)=>[...watched, movie]);
-
-    //localStorage.setItem('watched', JSON.stringify([...watched, movie]));
   }
 
   function handleDeleteWatched(deleteId){
     setWatched((eachWatched) => eachWatched.filter((eachMovie) => eachMovie.imdbID !== deleteId))
   }
-  
 
-  useEffect(() => {
-    localStorage.setItem('watched', JSON.stringify(watched));
-  },[watched])
-
-
-  useEffect(() => {
+  useEffect(() =>{
     const controller = new AbortController();
 
       async function fetchMovies() {
@@ -241,7 +275,6 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const watchedRatedMovie = watched.find((eachWatched) => eachWatched.imdbID === selectedId);
   const watchedRatedMovieRating = watchedRatedMovie?.userRating;
 
-
   const {
     Title: title, 
     Year: year, 
@@ -255,27 +288,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     Genre: genre 
   } = movie;
 
-
-  //if (imdbRating > 8) [isTop, setIsTop] = useState(true);
-  //if(imdbRating > 8) return <p>Greatest Ever!</p>;
-
-  /*const [isTop, setIsTop] = useState(imdbRating > 8);
-  console.log(isTop);
-
-  useEffect(() => {
-    function imdbUpdate()
-    {
-      setIsTop(imdbRating > 8)
-    }
-    imdbUpdate()
-  },[imdbRating])*/
-
-  const isTop = imdbRating > 8;
-  console.log(isTop);
-
-  //const [avgRating, setAvgRating] = useState(0);
-
-  function handleAdd() {
+  function handleAdd(){
     const newWatchMovie = {
       imdbID: selectedId,
       title,
@@ -288,14 +301,11 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
 
     onAddWatched(newWatchMovie);
     onCloseMovie();
-
-    //setAvgRating(Number(imdbRating));
-    //setAvgRating((a) => a = (a + userRating)/2)
-
   }
 
 
   useEffect(() =>{
+
     async function getMovieDetails() {
       setIsLoading(true);
       const res = await fetch(`http://www.omdbapi.com/?apikey=${theKey}&i=${selectedId}`);
@@ -309,6 +319,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
 
 
   useEffect(() =>{
+
     if(!title) return;
     document.title = `Movie | ${title}`;
 
@@ -319,6 +330,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   
 
   useEffect(() => {
+
     function callback(e) {
       if (e.code === 'Escape') {
         onCloseMovie();
@@ -353,8 +365,6 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
         </div>
 
         </headers>
-
-        {/*<p>{avgRating}</p>*/}
 
         <section>
 
