@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 
 const average = (arr) =>
@@ -8,7 +8,7 @@ const theKey = "6e4b7af9";
 
 ////////////////////////////// [index.js] ← App //////////////////////////////
 export default function App() {
-  const [query, setQuery] = useState("King");
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -41,7 +41,7 @@ export default function App() {
   function handleDeleteWatched(deleteId){
     setWatched((eachWatched) => eachWatched.filter((eachMovie) => eachMovie.imdbID !== deleteId))
   }
-  
+
 
   useEffect(() => {
     localStorage.setItem('watched', JSON.stringify(watched));
@@ -164,6 +164,33 @@ function Logo() {
 
 ////////////////////////////// App ← NavBar ← Search //////////////////////////////
 function Search({ query, setQuery }) {
+
+  const inputEl = useRef(null)
+
+  useEffect(()=>{
+    function callback(e)
+    {
+
+      if(document.activeElement === inputEl.current) return;
+
+      if(e.code === "Enter")
+      {
+        inputEl.current.focus();
+        setQuery("");
+      }
+    }
+
+    document.addEventListener('keydown', callback);
+    return () => document.removeEventListener('keydown', callback); //Clean-up function
+
+  }, [setQuery]);
+
+  /*useEffect(()=>{
+    const el = document.querySelector(".search");
+    console.log(el);
+    el.focus();
+  }, []);*/
+
   return (
     <input
       className="search"
@@ -171,6 +198,7 @@ function Search({ query, setQuery }) {
       placeholder="Search movies..."
       value={query}
       onChange={(e) => setQuery(e.target.value)}
+      ref={inputEl}
     />
   );
 }
@@ -414,7 +442,7 @@ function WatchedSummary({ watched }) {
         </p>
         <p>
           <span>⏳</span>
-          <span>{avgRuntime} min</span>
+          <span>{avgRuntime.toFixed(2)} min</span>
         </p>
       </div>
     </div>
