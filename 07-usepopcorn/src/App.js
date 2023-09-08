@@ -13,11 +13,12 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  
+
   const [watched, setWatched] = useState(() => {
     const storedValue = localStorage.getItem('watched');
-    return JSON.parse(storedValue);
+    return storedValue ? JSON.parse(storedValue) : [];
   });
+
   //const [watched, setWatched] = useState([]);
 
   function handleSelectMovie(id) {
@@ -265,6 +266,12 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState('');
 
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    if (userRating) countRef.current++;
+  }, [userRating])
+
   const isWatched = watched.map((eachWatched) => eachWatched.imdbID).includes(selectedId);
   const watchedRatedMovie = watched.find((eachWatched) => eachWatched.imdbID === selectedId);
   const watchedRatedMovieRating = watchedRatedMovie?.userRating;
@@ -284,20 +291,6 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   } = movie;
 
 
-  //if (imdbRating > 8) [isTop, setIsTop] = useState(true);
-  //if(imdbRating > 8) return <p>Greatest Ever!</p>;
-
-  /*const [isTop, setIsTop] = useState(imdbRating > 8);
-  console.log(isTop);
-
-  useEffect(() => {
-    function imdbUpdate()
-    {
-      setIsTop(imdbRating > 8)
-    }
-    imdbUpdate()
-  },[imdbRating])*/
-
   const isTop = imdbRating > 8;
   console.log(isTop);
 
@@ -312,6 +305,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
       imdbRating: Number(imdbRating),
       userRating,
       runtime: Number(runtime.split(" ").at(0)),
+      countRatingDecisions: countRef.current,
     };
 
     onAddWatched(newWatchMovie);
