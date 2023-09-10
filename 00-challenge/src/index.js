@@ -9,11 +9,15 @@ import Accordion from "./Accordion/Accordion";
 import TipCalculator from "./TipCalculator/TipCalculator";
 import TextExpander from "./TextExpander/TextExpander";
 import CurrencyConverter from "./CurrencyConverter/CurrencyConverter";
+import GeoLocation from "./GeoLocation/GeoLocation"
 
 function App() {
   return (
     <div className="flex-container">
 
+      <div className="box">
+        <GeoLocation />
+      </div>
       <div className="box">
         <CurrencyConverter />
       </div>
