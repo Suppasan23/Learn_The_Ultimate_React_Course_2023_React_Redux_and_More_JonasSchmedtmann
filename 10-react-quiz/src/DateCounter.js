@@ -2,9 +2,9 @@ import { useReducer } from "react";
 
 export default function DateCounter() {
 
-  const [state, dispatch] = useReducer((state, action)=>{
+  const [state, dispatch] = useReducer((state, action)=>
+  {
     console.log(state, action)
-
     switch (action.type) {
       case "dec": return { ...state, count: state.count -1 };
       case "inc": return { ...state, count: state.count +1 };
@@ -12,7 +12,9 @@ export default function DateCounter() {
       case "reset": return {count:0, step:1};
       default: throw new Error ("Unknow action")
     }
-  }, {count:0, step:1});
+  },{
+    count:0, step:1
+  });
 
   // This mutates the date object.
   const date = new Date("june 21 2027");
