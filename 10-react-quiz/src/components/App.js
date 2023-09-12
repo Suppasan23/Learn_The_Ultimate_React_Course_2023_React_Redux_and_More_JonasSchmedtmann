@@ -9,7 +9,7 @@ import Questions from "./Questions";
 
 export default function App(){
 
-  const [{questions, status}, dispatch] = useReducer((state, action)=>
+  const [{status, questions, index, choosing, points}, dispatch] = useReducer((state, action)=>
   {
     switch(action.type){
       case 'dataReceived':  return{ ...state, 
@@ -18,13 +18,22 @@ export default function App(){
       case 'dataFailed':    return{ ...state, 
                                     status: "error"}             
       case 'starto':        return{ ...state, 
-                                    status: "active",
-                                    index: action.payload}        
+                                    status: "active"}        
+      case 'newChoosing':   const currentQuestion = state.questions.at(state.index);
+                            return{ ...state, 
+                                    choosing: action.payload,
+                                    points: currentQuestion.correctOption === action.payload ? state.points + currentQuestion.points : state.points} 
       default: throw Error("Action unknow")
     }
-  },{questions:[], status: 'loading'/*'loading', 'error', 'ready', 'active', 'finished'*/, index: 0  });
+  },{
+    status: 'loading'/*'loading', 'error', 'ready', 'active', 'finished'*/, 
+    questions:[],  
+    index: 0,
+    choosing: null,
+    points: 0,
+  });
 
-  const numQuestions = questions.length;
+  //const numQuestions = questions.length;
 
   useEffect(()=>{
     async function recieveData(){
@@ -49,8 +58,10 @@ export default function App(){
       <Main>
         {status === 'loading' && <Loader />}
         {status === 'error' && <Error />}
-        {status === 'ready' && <StartScreen numQuestions={numQuestions} dispatch={dispatch}/>}
-        {status === 'active' && <Questions />}
+        {status === 'ready' && <StartScreen numQuestions={questions.length} dispatch={dispatch}/>}
+        {status === 'active' && <Questions currentQuestion={questions[index]}
+                                           choosing={choosing}
+                                           dispatch={dispatch}/>}
       </Main>
 
     </div>
