@@ -1,21 +1,30 @@
 import { useEffect, useReducer } from "react";
 import Header from "./Header";
 import Main from "./Main";
+import Loader from "./Loader";
+import Error from "./Error";
+import StartScreen from "./StartScreen";
+import Questions from "./Questions";
+
 
 export default function App(){
 
-  const [state, dispatch] = useReducer((state, action)=>
+  const [{questions, status}, dispatch] = useReducer((state, action)=>
   {
     switch(action.type){
       case 'dataReceived':  return{ ...state, 
                                     questions: action.payload,
                                     status: "ready"}
       case 'dataFailed':    return{ ...state, 
-                                    status: "error"}                  
+                                    status: "error"}             
+      case 'starto':        return{ ...state, 
+                                    status: "active",
+                                    index: action.payload}        
       default: throw Error("Action unknow")
     }
-  },{questions:[], status: 'loading' /*'loading', 'error', 'ready', 'active', 'finished'*/ });
-  
+  },{questions:[], status: 'loading'/*'loading', 'error', 'ready', 'active', 'finished'*/, index: 0  });
+
+  const numQuestions = questions.length;
 
   useEffect(()=>{
     async function recieveData(){
@@ -32,15 +41,17 @@ export default function App(){
     recieveData();
   },[])
 
-
   return (
     <div className="app">
 
-      <Header/>
+      <Header />
 
       <Main>
-        <p>1/15</p>
-        <p>Question?</p></Main>
+        {status === 'loading' && <Loader />}
+        {status === 'error' && <Error />}
+        {status === 'ready' && <StartScreen numQuestions={numQuestions} dispatch={dispatch}/>}
+        {status === 'active' && <Questions />}
+      </Main>
 
     </div>
   )
