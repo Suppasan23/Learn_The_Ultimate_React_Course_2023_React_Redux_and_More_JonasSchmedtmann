@@ -20,7 +20,10 @@ export default function App(){
       case 'dataFailed':    return{ ...state, 
                                     status: "error"}             
       case 'starto':        return{ ...state, 
-                                    status: "active"}        
+                                    status: "active",
+                                    index: 0,
+                                    choosing: null,
+                                    points: 0}        
       case 'newChoosing':   const currentQuestion = state.questions.at(state.index);
                             return{ ...state, 
                                     choosing: action.payload,
@@ -87,7 +90,10 @@ export default function App(){
                                                  numQuestion={numQuestions}
                                                  points={points}
                                                  maxPossiblePoints={maxPossiblePoints}/>
-                                    <FinishScreen points={points} maxPossiblePoints={maxPossiblePoints} highscore={highscore}/>
+                                    <FinishScreen points={points} 
+                                                  maxPossiblePoints={maxPossiblePoints} 
+                                                  highscore={highscore}
+                                                  dispatch={dispatch}/>
                                   </>
         }
       </Main>
