@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Options({ index, eachOpt, choosing, answer, dispatch }) {
     
   const hasChoosingYet = choosing !== null;

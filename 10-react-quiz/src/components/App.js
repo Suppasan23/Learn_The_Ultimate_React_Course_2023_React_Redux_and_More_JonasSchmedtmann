@@ -7,6 +7,7 @@ import StartScreen from "./StartScreen";
 import Questions from "./Questions";
 
 
+
 export default function App(){
 
   const [{status, questions, index, choosing, points}, dispatch] = useReducer((state, action)=>
@@ -23,6 +24,8 @@ export default function App(){
                             return{ ...state, 
                                     choosing: action.payload,
                                     points: currentQuestion.correctOption === action.payload ? state.points + currentQuestion.points : state.points} 
+      case 'nextQuestion':  return{...state, index: state.index + 1,
+                                    choosing: null}
       default: throw Error("Action unknow")
     }
   },{
@@ -59,9 +62,11 @@ export default function App(){
         {status === 'loading' && <Loader />}
         {status === 'error' && <Error />}
         {status === 'ready' && <StartScreen numQuestions={questions.length} dispatch={dispatch}/>}
-        {status === 'active' && <Questions currentQuestion={questions[index]}
-                                           choosing={choosing}
-                                           dispatch={dispatch}/>}
+        {status === 'active' && <>
+                                  <Questions  currentQuestion={questions[index]}
+                                              choosing={choosing}
+                                              dispatch={dispatch}/>
+                                </>}
       </Main>
 
     </div>

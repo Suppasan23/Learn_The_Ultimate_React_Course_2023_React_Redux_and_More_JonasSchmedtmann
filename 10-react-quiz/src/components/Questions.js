@@ -1,5 +1,6 @@
 import RevealAnswer from "./RevealAnswer";
 import Options from "./Options"
+import NextButton from "./NextButton";
 
 function Questions({currentQuestion, choosing, dispatch}){
 
@@ -24,6 +25,10 @@ function Questions({currentQuestion, choosing, dispatch}){
                 {(choosing !== null && choosing !== currentQuestion.correctOption) && 
                     <RevealAnswer answer={currentQuestion.options[currentQuestion.correctOption]}/>
                 }
+            </div>
+
+            <div>
+                {(choosing !== null) && <NextButton dispatch={dispatch}/>}
             </div>
 
         </div>
