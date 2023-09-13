@@ -11,7 +11,7 @@ import FinishScreen from "./FinishScreen";
 
 export default function App(){
 
-  const [{status, questions, index, choosing, points}, dispatch] = useReducer((state, action)=>
+  const [{status, questions, index, choosing, points, highscore}, dispatch] = useReducer((state, action)=>
   {
     switch(action.type){
       case 'dataReceived':  return{ ...state, 
@@ -29,8 +29,9 @@ export default function App(){
                                     index: state.index + 1,
                                     choosing: null}
       case 'finished':      return{...state,
+                                    status: "finished",
                                     index: state.index + 1,
-                                    status: "finished"}
+                                    highscore: (state.points > state.highscore) ? state.points : state.highscore}
       default: throw Error("Action unknow")
     }
   },{
@@ -39,6 +40,7 @@ export default function App(){
     index: 0,
     choosing: null,
     points: 0,
+    highscore: 0,
   });
 
   const numQuestions = questions.length;
@@ -85,7 +87,7 @@ export default function App(){
                                                  numQuestion={numQuestions}
                                                  points={points}
                                                  maxPossiblePoints={maxPossiblePoints}/>
-                                    <FinishScreen points={points} maxPossiblePoints={maxPossiblePoints}/>
+                                    <FinishScreen points={points} maxPossiblePoints={maxPossiblePoints} highscore={highscore}/>
                                   </>
         }
       </Main>
