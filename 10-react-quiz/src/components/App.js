@@ -7,11 +7,11 @@ import StartScreen from "./StartScreen";
 import Questions from "./Questions";
 import ProgressBar from "./ProgressBar";
 import FinishScreen from "./FinishScreen";
-
+import Timer from "./Timer";
 
 export default function App(){
 
-  const [{status, questions, index, choosing, points, highscore}, dispatch] = useReducer((state, action)=>
+  const [{status, questions, index, choosing, points, highscore, secondRemaining}, dispatch] = useReducer((state, action)=>
   {
     switch(action.type){
       case 'dataReceived':  return{ ...state, 
@@ -21,9 +21,7 @@ export default function App(){
                                     status: "error"}             
       case 'starto':        return{ ...state, 
                                     status: "active",
-                                    index: 0,
-                                    choosing: null,
-                                    points: 0}        
+                                    secondRemaining: state.questions.length * 30}        
       case 'newChoosing':   const currentQuestion = state.questions.at(state.index);
                             return{ ...state, 
                                     choosing: action.payload,
@@ -35,6 +33,16 @@ export default function App(){
                                     status: "finished",
                                     index: state.index + 1,
                                     highscore: (state.points > state.highscore) ? state.points : state.highscore}
+      case 'restarto':      return{ ...state, 
+                                    status: "ready",
+                                    index: 0,
+                                    choosing: null,
+                                    points: 0,
+                                  }    
+      case 'tick':          return{ ...state,
+                                    secondRemaining: state.secondRemaining - 1,
+                                    status: state.secondRemaining === 0 ? 'finished' : state.status
+                                  }
       default: throw Error("Action unknow")
     }
   },{
@@ -44,6 +52,7 @@ export default function App(){
     choosing: null,
     points: 0,
     highscore: 0,
+    secondRemaining: null,
   });
 
   const numQuestions = questions.length;
@@ -75,10 +84,11 @@ export default function App(){
         {status === 'error' && <Error />}
         {status === 'ready' && <StartScreen numQuestions={numQuestions} dispatch={dispatch}/>}
         {status === 'active' && <>
+                                  <Timer dispatch={dispatch} secondRemaining={secondRemaining}/>
                                   <ProgressBar index={index} 
                                                numQuestion={numQuestions}
                                                points={points}
-                                               maxPossiblePoints={maxPossiblePoints}/>
+                                               maxPossiblePoints={maxPossiblePoints}/>      
                                   <Questions index={index} 
                                              numQuestion={numQuestions}
                                              currentQuestion={questions[index]}
@@ -94,10 +104,8 @@ export default function App(){
                                                   maxPossiblePoints={maxPossiblePoints} 
                                                   highscore={highscore}
                                                   dispatch={dispatch}/>
-                                  </>
-        }
+                                  </>}
       </Main>
-
     </div>
   )
 }
