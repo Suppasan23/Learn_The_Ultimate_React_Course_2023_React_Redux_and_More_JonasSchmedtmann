@@ -5,7 +5,8 @@ import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Questions from "./Questions";
-
+import ProgressBar from "./ProgressBar";
+import FinishScreen from "./FinishScreen";
 
 
 export default function App(){
@@ -24,8 +25,12 @@ export default function App(){
                             return{ ...state, 
                                     choosing: action.payload,
                                     points: currentQuestion.correctOption === action.payload ? state.points + currentQuestion.points : state.points} 
-      case 'nextQuestion':  return{...state, index: state.index + 1,
+      case 'nextQuestion':  return{...state, 
+                                    index: state.index + 1,
                                     choosing: null}
+      case 'finished':      return{...state,
+                                    index: state.index + 1,
+                                    status: "finished"}
       default: throw Error("Action unknow")
     }
   },{
@@ -36,7 +41,9 @@ export default function App(){
     points: 0,
   });
 
-  //const numQuestions = questions.length;
+  const numQuestions = questions.length;
+  const maxPossiblePoints = questions.reduce((prev, cur) => prev + cur.points , 0);
+
 
   useEffect(()=>{
     async function recieveData(){
@@ -61,12 +68,26 @@ export default function App(){
       <Main>
         {status === 'loading' && <Loader />}
         {status === 'error' && <Error />}
-        {status === 'ready' && <StartScreen numQuestions={questions.length} dispatch={dispatch}/>}
+        {status === 'ready' && <StartScreen numQuestions={numQuestions} dispatch={dispatch}/>}
         {status === 'active' && <>
-                                  <Questions  currentQuestion={questions[index]}
-                                              choosing={choosing}
-                                              dispatch={dispatch}/>
+                                  <ProgressBar index={index} 
+                                               numQuestion={numQuestions}
+                                               points={points}
+                                               maxPossiblePoints={maxPossiblePoints}/>
+                                  <Questions index={index} 
+                                             numQuestion={numQuestions}
+                                             currentQuestion={questions[index]}
+                                             choosing={choosing}
+                                             dispatch={dispatch}/>
                                 </>}
+        {status === 'finished' && <>
+                                    <ProgressBar index={index} 
+                                                 numQuestion={numQuestions}
+                                                 points={points}
+                                                 maxPossiblePoints={maxPossiblePoints}/>
+                                    <FinishScreen points={points} maxPossiblePoints={maxPossiblePoints}/>
+                                  </>
+        }
       </Main>
 
     </div>

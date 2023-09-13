@@ -2,7 +2,8 @@ import RevealAnswer from "./RevealAnswer";
 import Options from "./Options"
 import NextButton from "./NextButton";
 
-function Questions({currentQuestion, choosing, dispatch}){
+
+function Questions({index, currentQuestion, numQuestion, choosing, dispatch}){
 
     console.log(currentQuestion);
     
@@ -11,12 +12,12 @@ function Questions({currentQuestion, choosing, dispatch}){
             <p style={{fontSize:"30px"}}>{currentQuestion.question}</p>
 
             <div>
-                {currentQuestion.options.map((eachOpt, index) => (
-                    <Options    key={index}
-                                index={index}
+                {currentQuestion.options.map((eachOpt, i) => (
+                    <Options    key={i}
+                                i={i}
                                 eachOpt={eachOpt}
                                 choosing={choosing}
-                                answer={index === currentQuestion.correctOption}
+                                answer={i === currentQuestion.correctOption}
                                 dispatch={dispatch}/>
                 ))}
             </div>
@@ -28,7 +29,7 @@ function Questions({currentQuestion, choosing, dispatch}){
             </div>
 
             <div>
-                {(choosing !== null) && <NextButton dispatch={dispatch}/>}
+                {(choosing !== null) && <NextButton index={index} numQuestion={numQuestion} dispatch={dispatch}/>}
             </div>
 
         </div>

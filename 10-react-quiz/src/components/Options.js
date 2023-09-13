@@ -1,18 +1,18 @@
 import React from 'react';
 
 
-function Options({ index, eachOpt, choosing, answer, dispatch }) {
+function Options({ i, eachOpt, choosing, answer, dispatch }) {
     
   const hasChoosingYet = choosing !== null;
 
   function handleChoosingSelected() {
-    dispatch({ type: 'newChoosing', payload: index });
+    dispatch({ type: 'newChoosing', payload: i });
   }
 
   function classOfButt() {
     return `btn btn-option 
                 ${hasChoosingYet && 
-                    (`${index === choosing && 
+                    (`${i === choosing && 
                             (`choosing 
                                 ${answer ? 
                                     'correct' : 'wrong'
