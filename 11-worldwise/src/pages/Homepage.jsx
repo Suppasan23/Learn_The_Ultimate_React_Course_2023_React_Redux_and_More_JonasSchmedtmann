@@ -1,4 +1,5 @@
 import PageNav from "../components/PageNav";
+import "../index.css"
 import styles from "./Homepage.module.css";
 
 export default function Homepage() {

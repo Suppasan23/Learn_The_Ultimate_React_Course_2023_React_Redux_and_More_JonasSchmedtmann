@@ -24,3 +24,13 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.div_button{
+  display: flex; /* Make the parent a flex container */
+  justify-content: flex-end; /* Align the button to the right of the parent */
+}
+
+.button{
+  padding: 5px;
+  margin: 2px;
+}

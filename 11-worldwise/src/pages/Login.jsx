@@ -1,5 +1,7 @@
 import { useState } from "react";
+import "../index.css"
 import styles from "./Login.module.css";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Login() {
   // PRE-FILL FOR DEV PURPOSES
@@ -29,8 +31,9 @@ export default function Login() {
           />
         </div>
 
-        <div>
-          <button>Login</button>
+        <div className={styles.div_button}>
+          <button className={styles.button}><strong>Login</strong></button>
+          <button className={styles.button}><strong><NavLink to='/'>Cancel</NavLink></strong></button>
         </div>
       </form>
     </main>
