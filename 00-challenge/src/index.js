@@ -10,11 +10,15 @@ import TipCalculator from "./TipCalculator/TipCalculator";
 import TextExpander from "./TextExpander/TextExpander";
 import CurrencyConverter from "./CurrencyConverter/CurrencyConverter";
 import GeoLocation from "./GeoLocation/GeoLocation"
+import BankAccount from "./BackAccount/BankAccount";
 
 function App() {
   return (
     <div className="flex-container">
 
+      <div className="box">
+        <BankAccount />
+      </div>
       <div className="box">
         <GeoLocation />
       </div>
