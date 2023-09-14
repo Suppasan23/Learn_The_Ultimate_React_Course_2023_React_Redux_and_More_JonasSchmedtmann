@@ -1,26 +1,24 @@
-import { Link } from "react-router-dom";
 import PageNav from "../components/PageNav";
-import AppNav from "../components/AppNav";
+import styles from "./Homepage.module.css";
 
-function Homepage() {
-    return (
-        <>
-            <p>
-                <span>WorldWise</span>&nbsp;
-            </p>
+export default function Homepage() {
+  return (
+    <main className={styles.homepage}>
 
-            <div>
-                <PageNav />
-                <AppNav />
-            </div>
+      <PageNav />
 
-            <div>
-                <Link to="/app">Go to the app</Link>
-            </div>
-            
-            <img src="src\images\rrrr.jpg" alt="Mountian festival"/>
-        </>
-    )
+      <section>
+        <h1>
+          You travel the world.
+          <br />
+          WorldWise keeps track of your adventures.
+        </h1>
+        <h2>
+          A world map that tracks your footsteps into every city you can think
+          of. Never forget your wonderful experiences, and show your friends how
+          you have wandered the world.
+        </h2>
+      </section>
+    </main>
+  );
 }
-
-export default Homepage;
