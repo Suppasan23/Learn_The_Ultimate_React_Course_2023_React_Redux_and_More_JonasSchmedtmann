@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../index.css"
 import styles from "./Login.module.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import PageNav from "../components/PageNav";
 
 export default function Login() {
