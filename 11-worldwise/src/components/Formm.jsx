@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 
-import styles from "./Form.module.css";
+import styles from "./Formm.module.css";
+import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -12,14 +14,15 @@ export function convertToEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
-function Form() {
+function Formm() {
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState("");
+  const navigate = useNavigate();
 
   return (
-    <form className={styles.form}>
+    <form className={styles.formm}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
@@ -49,11 +52,20 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <button>Add</button>
-        <button>&larr; Back</button>
+
+        <Button type="primary" onClick={(e)=> {
+          e.preventDefault()
+        }}>Add</Button>
+
+        <Button type="back" onClick={(e) => {
+          e.preventDefault();
+          navigate(-1);
+        }}>&lArr; Back</Button>
+        
       </div>
+
     </form>
   );
 }
 
-export default Form;
+export default Formm;
