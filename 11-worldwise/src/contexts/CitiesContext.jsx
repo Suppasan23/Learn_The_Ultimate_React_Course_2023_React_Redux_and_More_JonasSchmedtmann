@@ -1,14 +1,24 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const CitiesContext = createContext();
+const BASE_URL = "http://localhost:8000";
 
 function CitiesContext_Provider({ children }) {
   const [cities, setCities] = useState([]);
+  const [selectedCity, setSelectedCity] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const BASE_URL = "http://localhost:8000";
+
+  const formatDate = (date) =>
+    new Intl.DateTimeFormat("en", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    weekday: "long",
+  }).format(new Date(date));
 
   useEffect(() => {
     async function fetchCities() {
+      setIsLoading(true);
       try {
         const res = await fetch(`${BASE_URL}/cities`);
         const data = await res.json();
@@ -23,9 +33,27 @@ function CitiesContext_Provider({ children }) {
     fetchCities();
   }, []);
 
+  async function getSelectedCity(id){
+    setIsLoading(true);
+    try {
+        const res = await fetch(`${BASE_URL}/cities/${id}`);
+        const data = await res.json();
+        setSelectedCity(data);
+    } catch {
+        alert("There was an error loading data...");
+    } finally {
+        setIsLoading(false);
+    }
+  }
+  
   return (
-    <CitiesContext.Provider value={{ cities, isLoading }}>
-      {children}
+    <CitiesContext.Provider 
+     value={{   cities, 
+                selectedCity,
+                getSelectedCity, 
+                formatDate,
+                isLoading }}>
+     {children}
     </CitiesContext.Provider>
   );
 }

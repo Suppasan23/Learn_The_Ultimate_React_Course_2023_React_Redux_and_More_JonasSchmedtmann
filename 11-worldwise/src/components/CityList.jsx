@@ -4,7 +4,6 @@ import Message from './Message';
 import Spinner from './Spinner';
 import { CitiesContext_Using } from '../contexts/CitiesContext';
 
-
 function CityList() {
 
     const {cities, isLoading} = CitiesContext_Using();
