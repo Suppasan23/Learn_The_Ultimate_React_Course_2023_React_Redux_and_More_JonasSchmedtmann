@@ -10,14 +10,12 @@ import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Formm from "./components/Formm";
-import CitiesProvider from "./contexts/CitiesContext";
-
-
+import { CitiesContext_Provider } from "./contexts/CitiesContext";
 
 function App() {
   return (
     <>
-      <CitiesProvider>
+      <CitiesContext_Provider>
         <BrowserRouter>
           <Routes>
             <Route index element={<Homepage />} />
@@ -33,7 +31,7 @@ function App() {
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
-      </CitiesProvider>
+      </CitiesContext_Provider>
     </>
   )
 }
