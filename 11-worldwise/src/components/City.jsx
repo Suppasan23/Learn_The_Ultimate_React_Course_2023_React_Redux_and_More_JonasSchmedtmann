@@ -5,6 +5,7 @@ import { CitiesContext_Using } from "../contexts/CitiesContext";
 import { useEffect } from "react";
 import ShowTheFlag from "./ShowTheFlag";
 import Spinner from "./Spinner";
+import BackButton from "./BackButton";
 
 function City() {
 
@@ -65,7 +66,7 @@ function City() {
         </div>
 
         <div>
-          
+          <BackButton/>
         </div>
       </div>
     </>
