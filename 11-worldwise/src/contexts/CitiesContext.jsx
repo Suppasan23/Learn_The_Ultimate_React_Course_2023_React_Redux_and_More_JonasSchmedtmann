@@ -17,30 +17,50 @@ function CitiesContext_Provider({ children }) {
   }).format(new Date(date));
 
   useEffect(() => {
-    async function fetchCities() {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`${BASE_URL}/cities`);
-        const data = await res.json();
-        setCities(data);
-      } catch {
-        alert("There was an error loading data...");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
     fetchCities();
   }, []);
 
-  async function getSelectedCity(id){
+  async function fetchCities() {
     setIsLoading(true);
     try {
+      const res = await fetch(`${BASE_URL}/cities`);
+      const data = await res.json();
+      setCities(data);
+    } catch {
+      alert("There was an error loading data...");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function getSelectedCity(id){
+    try {
+        setIsLoading(true);
         const res = await fetch(`${BASE_URL}/cities/${id}`);
         const data = await res.json();
         setSelectedCity(data);
     } catch {
         alert("There was an error loading data...");
+    } finally {
+        setIsLoading(false);
+    }
+  }
+
+  async function createBookingCity(newCity){
+    try {
+        setIsLoading(true);
+        const res = await fetch(`${BASE_URL}/cities`, {
+          method: "POST",
+          body: JSON.stringify(newCity),
+          headers: {
+            "Content-Type": "application/json"
+          },
+        });
+        const data = await res.json();
+        console.log(data)
+        fetchCities();
+    } catch {
+        alert("There was an error creating data...");
     } finally {
         setIsLoading(false);
     }
@@ -51,6 +71,7 @@ function CitiesContext_Provider({ children }) {
      value={{   cities, 
                 selectedCity,
                 getSelectedCity, 
+                createBookingCity,
                 formatDate,
                 isLoading }}>
      {children}

@@ -11,7 +11,7 @@ import { useUrlPosition } from '../hooks/useUrlPosition';
 function Map() {
   const { cities } = CitiesContext_Using();
 
-  const [mapPosition, setMapPosition] = useState([40, 50]);
+  const [mapPosition, setMapPosition] = useState([40, -100]);
 
   const [mapLat, mapLng] = useUrlPosition();
 
@@ -62,7 +62,7 @@ function Map() {
 
         <MapContainer
             center={mapPosition}
-            zoom={6}
+            zoom={5}
             scrollWheelZoom={true}
             className={styles.map}>
             <TileLayer
