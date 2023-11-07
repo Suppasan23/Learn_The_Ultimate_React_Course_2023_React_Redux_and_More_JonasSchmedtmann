@@ -49,18 +49,6 @@
       "id": 98443198
     },
     {
-      "cityName": "Richmond",
-      "country": "United States of America (the)",
-      "emoji": "🇺🇸",
-      "date": "2023-11-07T14:07:04.344Z",
-      "notes": "go",
-      "position": {
-        "lat": "37.633466243039585",
-        "lng": "-77.51953125000001"
-      },
-      "id": 98443201
-    },
-    {
       "cityName": "Kazo",
       "country": "Japan",
       "emoji": "🇯🇵",
@@ -85,16 +73,28 @@
       "id": 98443204
     },
     {
-      "cityName": "Tashelan",
-      "country": "Russian Federation (the)",
-      "emoji": "🇷🇺",
-      "date": "2023-11-07T15:28:55.378Z",
+      "cityName": "Valigonda",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2023-11-07T16:13:57.241Z",
       "notes": "",
       "position": {
-        "lat": "51.78380962176664",
-        "lng": "109.12599551503982"
+        "lat": "17.419937013898075",
+        "lng": "79.1015625"
       },
-      "id": 98443205
+      "id": 98443207
+    },
+    {
+      "cityName": "Socorro",
+      "country": "United States of America (the)",
+      "emoji": "🇺🇸",
+      "date": "2023-11-07T17:13:59.122Z",
+      "notes": "",
+      "position": {
+        "lat": "34.38968394124274",
+        "lng": "-106.61132812500001"
+      },
+      "id": 98443208
     }
   ]
 }
