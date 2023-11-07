@@ -5,6 +5,7 @@ import { useState } from "react";
 import styles from "./Formm.module.css";
 import Button from "./Button";
 import BackButton from "./BackButton";
+import { useSearchParams } from "react-router-dom";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -15,49 +16,57 @@ export function convertToEmoji(countryCode) {
 }
 
 function Formm() {
+
   const [cityName, setCityName] = useState("");
-  const [country, setCountry] = useState("");
+  //const [country, setCountry] = useState("");
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState("");
 
+  const [ searchParams ] = useSearchParams();
+  const mapLat = searchParams.get("lat");
+  const mapLng = searchParams.get("lng");
+
   return (
-    <form className={styles.formm}>
-      <div className={styles.row}>
-        <label htmlFor="cityName">City name</label>
-        <input
-          id="cityName"
-          onChange={(e) => setCityName(e.target.value)}
-          value={cityName}
-        />
-        {/* <span className={styles.flag}>{emoji}</span> */}
-      </div>
+    <>
+      <p>Latituse=${mapLat}<br/>Lontitude=${mapLng}</p>
 
-      <div className={styles.row}>
-        <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
-          id="date"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
-        />
-      </div>
+      <form className={styles.formm}>
+        <div className={styles.row}>
+          <label htmlFor="cityName">City name</label>
+          <input
+            id="cityName"
+            onChange={(e) => setCityName(e.target.value)}
+            value={cityName}
+            />
+          {/* <span className={styles.flag}>{emoji}</span> */}
+        </div>
 
-      <div className={styles.row}>
-        <label htmlFor="notes">Notes about your trip to {cityName}</label>
-        <textarea
-          id="notes"
-          onChange={(e) => setNotes(e.target.value)}
-          value={notes}
-        />
-      </div>
+        <div className={styles.row}>
+          <label htmlFor="date">When did you go to {cityName}?</label>
+          <input
+            id="date"
+            onChange={(e) => setDate(e.target.value)}
+            value={date}
+            />
+        </div>
 
-      <div className={styles.buttons}>
+        <div className={styles.row}>
+          <label htmlFor="notes">Notes about your trip to {cityName}</label>
+          <textarea
+            id="notes"
+            onChange={(e) => setNotes(e.target.value)}
+            value={notes}
+            />
+        </div>
 
-        <Button type="primary" onClick={(e)=> { e.preventDefault() }}>Add</Button>
-        <BackButton/>
+        <div className={styles.buttons}>
 
-      </div>
+          <Button type="primary" onClick={(e)=> { e.preventDefault() }}>Add</Button>
+          <BackButton/>
 
-    </form>
+        </div>
+      </form>
+    </>
   );
 }
 
