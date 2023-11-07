@@ -5,7 +5,7 @@ const BASE_URL = "http://localhost:8000";
 
 function CitiesContext_Provider({ children }) {
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState([]);
+  const [selectedCity, setBookingCity] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const formatDate = (date) =>
@@ -38,7 +38,7 @@ function CitiesContext_Provider({ children }) {
         setIsLoading(true);
         const res = await fetch(`${BASE_URL}/cities/${id}`);
         const data = await res.json();
-        setSelectedCity(data);
+        setBookingCity(data);
     } catch {
         alert("There was an error loading data...");
     } finally {
@@ -49,18 +49,30 @@ function CitiesContext_Provider({ children }) {
   async function createBookingCity(newCity){
     try {
         setIsLoading(true);
-        const res = await fetch(`${BASE_URL}/cities`, {
+        await fetch(`${BASE_URL}/cities`, {
           method: "POST",
           body: JSON.stringify(newCity),
           headers: {
             "Content-Type": "application/json"
           },
         });
-        const data = await res.json();
-        console.log(data)
         fetchCities();
     } catch {
         alert("There was an error creating data...");
+    } finally {
+        setIsLoading(false);
+    }
+  }
+
+  async function deleteBookingCity(id){
+    try {
+        setIsLoading(true);
+        await fetch(`${BASE_URL}/cities/${id}`, {
+          method: "DELETE",
+        });
+        fetchCities();
+    } catch {
+        alert("There was an error deleting data...");
     } finally {
         setIsLoading(false);
     }
@@ -72,6 +84,7 @@ function CitiesContext_Provider({ children }) {
                 selectedCity,
                 getSelectedCity, 
                 createBookingCity,
+                deleteBookingCity,
                 formatDate,
                 isLoading }}>
      {children}

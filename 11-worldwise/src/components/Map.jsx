@@ -55,7 +55,6 @@ function Map() {
   return (
     <div className={styles.mapContainer}>
 
-
         <Button type='position' onClick={getPosition}>
             {isLoadingPosition ? 'Loading...' : 'Use your position'}
         </Button>
@@ -72,7 +71,7 @@ function Map() {
             {cities.map((city) => (
             <Marker key={city.id} position={[city.position.lat, city.position.lng]}>
                 <Popup>
-                <ShowTheFlag bool={false} country={city.country} />
+                <ShowTheFlag bool={true} country={city.country} />
                 <span>{city.cityName}</span>
                 </Popup>
             </Marker>

@@ -49,30 +49,6 @@
       "id": 98443198
     },
     {
-      "cityName": "Huerfano Valley",
-      "country": "United States of America (the)",
-      "emoji": "🇺🇸",
-      "date": "2023-11-07T13:57:23.213Z",
-      "notes": "Test",
-      "position": {
-        "lat": "38.19038997723749",
-        "lng": "-104.50195312500001"
-      },
-      "id": 98443199
-    },
-    {
-      "cityName": "Gillette South",
-      "country": "United States of America (the)",
-      "emoji": "🇺🇸",
-      "date": "2023-11-07T14:05:09.741Z",
-      "notes": "testo",
-      "position": {
-        "lat": "44.2722127342919",
-        "lng": "-105.20507812500001"
-      },
-      "id": 98443200
-    },
-    {
       "cityName": "Richmond",
       "country": "United States of America (the)",
       "emoji": "🇺🇸",
@@ -83,18 +59,6 @@
         "lng": "-77.51953125000001"
       },
       "id": 98443201
-    },
-    {
-      "cityName": "Bangkok",
-      "country": "Thailand",
-      "emoji": "🇹🇭",
-      "date": "2023-11-07T14:09:06.258Z",
-      "notes": "go",
-      "position": {
-        "lat": "13.7494528",
-        "lng": "100.5453312"
-      },
-      "id": 98443202
     },
     {
       "cityName": "Kazo",
@@ -109,64 +73,28 @@
       "id": 98443203
     },
     {
-      "cityName": "Sumber Barito",
-      "country": "Indonesia",
-      "emoji": "🇮🇩",
-      "date": "2023-11-07T14:18:53.525Z",
+      "cityName": "Mandalt",
+      "country": "China",
+      "emoji": "🇨🇳",
+      "date": "2023-11-07T15:28:50.188Z",
       "notes": "",
       "position": {
-        "lat": "-0.28450561214944853",
-        "lng": "114.07707308640188"
+        "lat": "43.231848367088894",
+        "lng": "114.04273013860409"
       },
       "id": 98443204
     },
     {
-      "cityName": "Mianyang",
-      "country": "China",
-      "emoji": "🇨🇳",
-      "date": "2023-11-07T14:20:12.532Z",
+      "cityName": "Tashelan",
+      "country": "Russian Federation (the)",
+      "emoji": "🇷🇺",
+      "date": "2023-11-07T15:28:55.378Z",
       "notes": "",
       "position": {
-        "lat": "31.043740595005737",
-        "lng": "104.93213727947531"
+        "lat": "51.78380962176664",
+        "lng": "109.12599551503982"
       },
       "id": 98443205
-    },
-    {
-      "cityName": "Bayan-Ovoo",
-      "country": "Mongolia",
-      "emoji": "🇲🇳",
-      "date": "2023-11-07T14:21:53.189Z",
-      "notes": "",
-      "position": {
-        "lat": "42.80798785738201",
-        "lng": "105.94599119279431"
-      },
-      "id": 98443206
-    },
-    {
-      "cityName": "Lao Mangnai",
-      "country": "China",
-      "emoji": "🇨🇳",
-      "date": "2023-11-24T14:23:44.000Z",
-      "notes": "",
-      "position": {
-        "lat": "38.67675078520237",
-        "lng": "93.82087345058817"
-      },
-      "id": 98443207
-    },
-    {
-      "cityName": "Mount Willoughby",
-      "country": "Australia",
-      "emoji": "🇦🇺",
-      "date": "2024-04-24T14:23:58.000Z",
-      "notes": "",
-      "position": {
-        "lat": "-28.509978289287144",
-        "lng": "135.69453281145013"
-      },
-      "id": 98443208
     }
   ]
 }

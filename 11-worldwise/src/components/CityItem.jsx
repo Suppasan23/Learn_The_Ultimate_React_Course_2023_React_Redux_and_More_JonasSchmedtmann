@@ -5,8 +5,14 @@ import ShowTheFlag from './ShowTheFlag';
 
 function CityItem({ city }) {
 
-    const { selectedCity, formatDate } = CitiesContext_Using();
+    const { selectedCity, formatDate, deleteBookingCity } = CitiesContext_Using();
     const { cityName, country, date, id, position } = city;
+
+    function handleDeleteBtnClick(e) {
+      e.preventDefault();
+      console.log("TEST")
+      deleteBookingCity(id);
+    }
 
     return (
       <>
@@ -15,7 +21,7 @@ function CityItem({ city }) {
             <ShowTheFlag bool={false} country={country} id={id}/>
             <h3 className={styles.name}>{cityName}</h3>
             <time className={styles.date}>{formatDate(date)}</time>
-            <button className={styles.deleteBtn}>&times;</button>
+            <button className={styles.deleteBtn} onClick={handleDeleteBtnClick}>&times;</button>
           </Link>
         </li>
       </>
