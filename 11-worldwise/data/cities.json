@@ -95,6 +95,30 @@
         "lng": "-106.61132812500001"
       },
       "id": 98443208
+    },
+    {
+      "cityName": "Troy",
+      "country": "United States of America (the)",
+      "emoji": "🇺🇸",
+      "date": "2023-11-08T02:09:40.902Z",
+      "notes": "",
+      "position": {
+        "lat": "48.719961222646276",
+        "lng": "-116.01562500000001"
+      },
+      "id": 98443209
+    },
+    {
+      "cityName": "Songkhla",
+      "country": "Thailand",
+      "emoji": "🇹🇭",
+      "date": "2023-11-08T02:11:58.133Z",
+      "notes": "",
+      "position": {
+        "lat": "7.199918",
+        "lng": "100.6028721"
+      },
+      "id": 98443210
     }
   ]
 }

@@ -5,7 +5,8 @@ const BASE_URL = "http://localhost:8000";
 
 function CitiesContext_Provider({ children }) {
 
-  const [{cities, isLoading, selectedCity}, dispatch] = useReducer((state, action)=>{
+  const [{cities, isLoading, selectedCity}, dispatch] = useReducer((state, action)=>
+  {//reducer
     switch(action.type){
 
       case 'loading' :  return  { ...state, 
@@ -41,7 +42,8 @@ function CitiesContext_Provider({ children }) {
 
       default: throw new Error("Unknown action type");
     }
-  },{
+  },
+  {//initialState
     cities: [],
     isLoading: false,
     selectedCity: {},
