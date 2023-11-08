@@ -19,9 +19,9 @@ export default function Login() {
       }
   },[isAuthenticated, navigate])
 
-  async function handleLogin(e) {
+  function handleLogin(e) {
     e.preventDefault();
-    await login(email, password)
+    login(email, password)
   }
 
   return (

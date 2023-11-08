@@ -7,9 +7,9 @@ function User() {
   const {user, isAuthenticated, logout} = AuthContext_Using();
   const navigate = useNavigate();
 
-  async function handleLogOut(e) {
+  function handleLogOut(e) {
     e.preventDefault();
-    await logout();
+    logout();
     navigate("/")
   }
 

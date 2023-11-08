@@ -85,18 +85,6 @@
       "id": 98443207
     },
     {
-      "cityName": "Socorro",
-      "country": "United States of America (the)",
-      "emoji": "🇺🇸",
-      "date": "2023-11-07T17:13:59.122Z",
-      "notes": "",
-      "position": {
-        "lat": "34.38968394124274",
-        "lng": "-106.61132812500001"
-      },
-      "id": 98443208
-    },
-    {
       "cityName": "Troy",
       "country": "United States of America (the)",
       "emoji": "🇺🇸",
@@ -131,6 +119,18 @@
         "lng": "98.98818969726564"
       },
       "id": 98443212
+    },
+    {
+      "cityName": "West Clark",
+      "country": "United States of America (the)",
+      "emoji": "🇺🇸",
+      "date": "2023-11-08T08:47:05.600Z",
+      "notes": "",
+      "position": {
+        "lat": "44.18220395771566",
+        "lng": "-112.50000000000001"
+      },
+      "id": 98443213
     }
   ]
 }
