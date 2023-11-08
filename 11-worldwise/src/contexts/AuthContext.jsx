@@ -5,7 +5,7 @@ const AuthContext = createContext();
 const FAKE_USER = {
     name: "Jack",
     email: "jack@example.com",
-    password: "qwerty",
+    password: "qwerty", //Never do this in real world, it just for test.
     avatar: "https://i.pravatar.cc/100?u=zz",
   };
 
@@ -60,6 +60,7 @@ function AuthContext_Provider({children}){
 function AuthContext_Using(){
     const x = useContext(AuthContext)
     if(x === undefined) throw new console.error("AuthContext_Using was used outside the AuthContext_Provider");
+    return(x);
 }
 
 export {AuthContext_Provider, AuthContext_Using};

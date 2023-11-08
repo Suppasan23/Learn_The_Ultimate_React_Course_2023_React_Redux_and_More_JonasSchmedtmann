@@ -11,27 +11,31 @@ import CountryList from "./components/CountryList";
 import City from "./components/City";
 import Formm from "./components/Formm";
 import { CitiesContext_Provider } from "./contexts/CitiesContext";
+import { AuthContext_Provider } from "./contexts/AuthContext";
 
 function App() {
   return (
     <>
-      <CitiesContext_Provider>
-        <BrowserRouter>
-          <Routes>
-            <Route index element={<Homepage />} />
-            <Route path="product" element={<Product />} />
-            <Route path="pricing" element={<Pricing />} />
-            <Route path="login" element={<Login />} />
-            <Route path="app" element={<AppLayout />}>
-              <Route index element={<Navigate replace to="cities"/>}/>
-              <Route path="cities" element={<CityList />}/>
-              <Route path="cities/:id" element={<City />}/>
-              <Route path="countries" element={<CountryList />}/>
-              <Route path="form" element={<Formm />}/></Route>
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </CitiesContext_Provider>
+      <AuthContext_Provider>
+        <CitiesContext_Provider>
+            <BrowserRouter>
+              <Routes>
+                <Route index element={<Homepage />} />
+                <Route path="product" element={<Product />} />
+                <Route path="pricing" element={<Pricing />} />
+                <Route path="login" element={<Login />} />
+                <Route path="app" element={<AppLayout />}>
+                  <Route index element={<Navigate replace to="cities"/>}/>
+                  <Route path="cities" element={<CityList />}/>
+                  <Route path="cities/:id" element={<City />}/>
+                  <Route path="countries" element={<CountryList />}/>
+                  <Route path="form" element={<Formm />}/></Route>
+                <Route path="*" element={<PageNotFound />} />
+              </Routes>
+            </BrowserRouter>
+          
+        </CitiesContext_Provider>
+      </AuthContext_Provider>
     </>
   )
 }
