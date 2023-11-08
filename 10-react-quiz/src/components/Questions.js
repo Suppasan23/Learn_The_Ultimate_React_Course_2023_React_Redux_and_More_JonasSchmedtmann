@@ -1,11 +1,12 @@
 import RevealAnswer from "./RevealAnswer";
 import Options from "./Options"
 import NextButton from "./NextButton";
+import { QuizContextUsing } from "../contexts/QuizContext";
 
 
-function Questions({index, currentQuestion, numQuestion, choosing, dispatch}){
+function Questions(){
 
-    console.log(currentQuestion);
+    const { currentQuestion, choosing } = QuizContextUsing();
     
     return(
         <>
@@ -15,22 +16,18 @@ function Questions({index, currentQuestion, numQuestion, choosing, dispatch}){
                 <div>
                     {currentQuestion.options.map((eachOpt, i) => (
                         <Options    key={i}
-                        i={i}
+                                    i={i}
                                     eachOpt={eachOpt}
-                                    choosing={choosing}
-                                    answer={i === currentQuestion.correctOption}
-                                    dispatch={dispatch}/>
+                        />
                     ))}
                 </div>
 
                 <div>
-                    {(choosing !== null && choosing !== currentQuestion.correctOption) && 
-                        <RevealAnswer answer={currentQuestion.options[currentQuestion.correctOption]}/>
-                    }
+                    {(choosing !== null && choosing !== currentQuestion.correctOption) && <RevealAnswer/>}
                 </div>
 
                 <div>
-                    {(choosing !== null) && <NextButton index={index} numQuestion={numQuestion} dispatch={dispatch}/>}
+                    {(choosing !== null) && <NextButton/>}
                 </div>
 
             </div>

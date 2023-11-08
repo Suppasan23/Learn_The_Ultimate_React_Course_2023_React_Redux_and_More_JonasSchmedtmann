@@ -1,8 +1,4 @@
-import { QuizContextUsing } from "../contexts/QuizContext";
-
-function NextButton(){
-
-    const { index, numQuestions, dispatch } = QuizContextUsing();
+function NextButton({ index, numQuestions, dispatch }){
 
     if(index < numQuestions -1){
         return(

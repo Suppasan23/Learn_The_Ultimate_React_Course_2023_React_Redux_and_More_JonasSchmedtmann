@@ -1,8 +1,4 @@
-import { QuizContextUsing } from "../contexts/QuizContext"
-
-function StartScreen() {
-
-    const {numQuestions, dispatch} = QuizContextUsing();
+function StartScreen({numQuestions, dispatch}) {
 
     return(
         <div className="Start">

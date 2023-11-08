@@ -1,12 +1,8 @@
 import React from 'react';
-import { QuizContextUsing } from '../contexts/QuizContext';
 
 
-function Options({ i, eachOpt }) {
+function Options({ i, eachOpt, choosing, answer, dispatch }) {
     
-  const { choosing, currentQuestion, dispatch } = QuizContextUsing();
-
-  const answer = i === currentQuestion.correctOption;
   const hasChoosingYet = choosing !== null;
 
   function handleChoosingSelected() {
