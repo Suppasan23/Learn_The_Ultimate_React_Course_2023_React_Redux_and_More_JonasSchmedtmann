@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer} from "react";
+import { createContext, useCallback, useContext, useEffect, useReducer} from "react";
 
 const CitiesContext = createContext();
 const BASE_URL = "http://localhost:8000";
@@ -73,7 +73,7 @@ function CitiesContext_Provider({ children }) {
     }
   }
 
-  async function getSelectedCity(id){
+  const getSelectedCity = useCallback( async function getSelectedCity(id){
     if( Number(id) === selectedCity.id ) return;
     dispatch({type: "loading"});
 
@@ -84,7 +84,7 @@ function CitiesContext_Provider({ children }) {
     } catch {
         dispatch({type:"rejected", payload:"There was an error loading the select city..."});
     }
-  }
+  }, [selectedCity.id]);
 
   async function createBookingCity(newCity){
     dispatch({type: "loading"});

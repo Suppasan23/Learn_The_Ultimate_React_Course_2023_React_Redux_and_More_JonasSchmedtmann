@@ -18,12 +18,12 @@ function City() {
   const lng = searchParams.get("lng");*/
 
   const { cityName, country, date, notes } = selectedCity;
-
+ 
   console.log(country)
 
   useEffect(() => {
     getSelectedCity(id);
-  }, [id])
+  }, [getSelectedCity, id])
 
   if(isLoading) return <Spinner />;
 
