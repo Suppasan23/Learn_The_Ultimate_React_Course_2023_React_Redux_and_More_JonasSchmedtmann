@@ -12,24 +12,26 @@ function Calculator({ workouts, allowSound }) {
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
+  function handleIncTime() {
+    setDuration((i) => Math.floor(i) + 1);
+  }
+
+  function handleDecTime() {
+    duration <= 1 || setDuration((d) => Math.floor(d) - 1);
+  }
+
   useEffect(()=>{
     setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak)
   },[durationBreak, number, sets, speed])
 
-  const playSound = function () {
-    if (!allowSound) return;
-    const sound = new Audio(clickSound);
-    sound.play();
-  };
-
-  function handleIncTime() {
-    setDuration((i) => Math.floor(i) + 1)
-  }
-
-  function handleDecTime() {
-    duration <= 1 || setDuration((d) => Math.floor(d) - 1)
-  }
-
+  useEffect(()=>{
+    const playSound = function () {
+      if (!allowSound) return;
+      const sound = new Audio(clickSound);
+      sound.play();
+    };
+    playSound();
+  },[allowSound, duration])
 
   return (
     <>
