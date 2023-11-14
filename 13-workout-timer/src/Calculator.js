@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import clickSound from './ClickSound.m4a';
 
 function Calculator({ workouts, allowSound }) {
-  const [number, setNumber] = useState(workouts.at(0).numExercises);
+  const [number, setNumber] = useState(workouts.at(1).numExercises);
   const [sets, setSets] = useState(3);
   const [speed, setSpeed] = useState(90);
   const [durationBreak, setDurationBreak] = useState(5);
@@ -32,6 +32,10 @@ function Calculator({ workouts, allowSound }) {
     };
     playSound();
   },[allowSound, duration])
+
+  useEffect(()=>{
+    document.title = `${number}`;
+  },[number, duration, sets]);
 
   return (
     <>
