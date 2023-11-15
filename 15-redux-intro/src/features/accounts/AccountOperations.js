@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deposit, payLoan, requestLoan, withdraw } from "./accountSlice";
+import { useSelector } from "react-redux";
 
 function AccountOperations() {
   const [depositAmount, setDepositAmount] = useState("");
@@ -7,18 +10,49 @@ function AccountOperations() {
   const [loanPurpose, setLoanPurpose] = useState("");
   const [currency, setCurrency] = useState("USD");
 
-  function handleDeposit() {}
+  const account = useSelector((state) => state.account);
 
-  function handleWithdrawal() {}
+  console.log(account.balance);
+  console.log(account.loan);
 
-  function handleRequestLoan() {}
+  const dispatch = useDispatch();
 
-  function handlePayLoan() {}
+  function handleDeposit(e) {
+    e.preventDefault();
+    if(!depositAmount) return;
+    dispatch(deposit(Number(depositAmount)));
+    setDepositAmount("");
+  }
+
+  function handleWithdrawal(e) {
+    e.preventDefault();
+    if(!withdrawalAmount) return;
+    dispatch(withdraw(Number(withdrawalAmount)));
+    setWithdrawalAmount("");
+  }
+
+  function handleRequestLoan(e) {
+    e.preventDefault();
+    if(!loanAmount || !loanPurpose) return;
+    dispatch(requestLoan(Number(loanAmount), loanPurpose));
+    setLoanAmount("");
+    setLoanPurpose("");
+  }
+
+  function handlePayLoan(e) {
+    e.preventDefault();
+    if(account.balance < account.loan) return;
+    dispatch(payLoan());
+  }
 
   return (
     <div>
+
       <h2>Your account operations</h2>
+
       <div className="inputs">
+
+        {/* //Deposit///////////////////////////////////// */}
         <div>
           <label>Deposit</label>
           <input
@@ -38,6 +72,7 @@ function AccountOperations() {
           <button onClick={handleDeposit}>Deposit {depositAmount}</button>
         </div>
 
+        {/* //Withdraw///////////////////////////////////// */}
         <div>
           <label>Withdraw</label>
           <input
@@ -50,6 +85,8 @@ function AccountOperations() {
           </button>
         </div>
 
+
+        {/* //Request loan///////////////////////////////////// */}
         <div>
           <label>Request loan</label>
           <input
@@ -66,11 +103,15 @@ function AccountOperations() {
           <button onClick={handleRequestLoan}>Request loan</button>
         </div>
 
+
+        {/* //Pay back loan///////////////////////////////////// */}
         <div>
-          <span>Pay back $X</span>
+          <span>Pay back {account.loan} ({account.loanPurpose})</span>
           <button onClick={handlePayLoan}>Pay loan</button>
         </div>
+
       </div>
+
     </div>
   );
 }
