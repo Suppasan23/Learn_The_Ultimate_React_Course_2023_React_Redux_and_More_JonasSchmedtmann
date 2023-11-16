@@ -19,49 +19,35 @@ const accountSlice = createSlice({
             state.balance = state.balance - action.payload;
         },
 
-        requestLoan: {
-            prepare(amount, purpose) {
-                return {
-                    payload: {amount, purpose},
-                };
-            },
-            reducer(state, action){
-                if (state.loan > 0) return;
-                state.loan = action.payload.amount;
-                state.loanPurpose = action.payload.purpose;
-                state.balance = state.balance + action.payload.amount;
-            },
+        requestLoan(state, action) {
+            if (state.loan > 0) return;
+        
+            const { 
+                loanAmountSent: loanAmountRecieve , 
+                loanPurposeSent: loanPurposeRecieve 
+            } = action.payload;
+        
+            console.log(loanAmountRecieve);
+            console.log(loanPurposeRecieve);
+            state.loan = loanAmountRecieve;
+            state.loanPurpose = loanPurposeRecieve;
+            state.balance = state.balance + loanAmountRecieve;
         },
         
+
         payLoan(state) {
             state.balance = state.balance - state.loan;
             state.loan = 0;
             state.loanPurpose = "";
         },
-        convertingCurrency(state) {
-            state.isLoading = true;
+        convertingCurrency(state, action) {
+            state.isLoading = action.payload;
         },
     }
 });
 
-function changeCurrentcy(amount, currency) {
-    if(currency === "USD") return { type: "account/deposit", payload: amount }
-
-    return async function(dispatch, getState) {
-        dispatch({ type: "account/convertingCurrency", payload: true });
-
-        const res = await fetch(`https://${`api.frankfurter.app`}/latest?amount=${amount}&from=${currency}&to=USD`);
-        const data = await res.json();
-        const convertedAmount = data.rates.USD;
-
-        dispatch({ type: "account/deposit", payload: convertedAmount });
-
-        dispatch({ type: "account/convertingCurrency", payload: false });
-    };
-}
-
 console.log(accountSlice);
 
-export const {deposit, withdraw, requestLoan, payLoan} = accountSlice.actions
+export const {deposit, withdraw, requestLoan, payLoan, convertingCurrency} = accountSlice.actions
 
 export default accountSlice.reducer;

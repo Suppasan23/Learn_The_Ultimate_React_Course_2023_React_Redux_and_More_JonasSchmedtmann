@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deposit, payLoan, requestLoan, withdraw } from "./accountSlice";
+import { convertingCurrency, deposit, payLoan, requestLoan, withdraw } from "./accountSlice";
 import { useSelector } from "react-redux";
 
 function AccountOperations() {
@@ -17,10 +17,11 @@ function AccountOperations() {
 
   const dispatch = useDispatch();
 
-  function handleDeposit(e) {
+  async function handleDeposit(e) {
     e.preventDefault();
-    if(!depositAmount) return;
-    dispatch(deposit(Number(depositAmount), currency));
+    const realMoney = await convertMoney();
+    if(!realMoney) return;
+    dispatch(deposit(Number(realMoney)));
     setDepositAmount("");
     setCurrency("USD");
   }
@@ -35,7 +36,10 @@ function AccountOperations() {
   function handleRequestLoan(e) {
     e.preventDefault();
     if(!loanAmount || !loanPurpose) return;
-    dispatch(requestLoan(Number(loanAmount), loanPurpose));
+    dispatch(requestLoan({
+      loanAmountSent: Number(loanAmount), 
+      loanPurposeSent: loanPurpose
+    }));
     setLoanAmount("");
     setLoanPurpose("");
   }
@@ -44,6 +48,27 @@ function AccountOperations() {
     e.preventDefault();
     if(account.balance < account.loan) return;
     dispatch(payLoan());
+  }
+
+  async function convertMoney(){
+    if (currency === "USD") return depositAmount;
+
+    try {
+        dispatch(convertingCurrency(true))
+        const res = await fetch(`https://api.frankfurter.app/latest?amount=${depositAmount}&from=${currency}&to=USD`);
+        const data = await res.json();
+        const convertedAmount = data.rates.USD;
+
+        console.log(convertedAmount);
+
+        return convertedAmount;
+    } catch (error) {
+        console.error("Error converting currency:", error);
+        // Handle the error accordingly, e.g., return an error value or throw an exception
+        throw error;
+    } finally {
+      dispatch(convertingCurrency(false))
+    }
   }
 
   return (

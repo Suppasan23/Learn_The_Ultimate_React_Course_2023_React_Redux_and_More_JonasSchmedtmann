@@ -15,9 +15,9 @@ function App() {
         <CreateCustomer /> 
       ) : (
         <>
-          <Customer />
-          <AccountOperations />
-          <BalanceDisplay />
+          <Customer /> 
+          <AccountOperations /> 
+          <BalanceDisplay /> 
         </>
       )}
     </div>
