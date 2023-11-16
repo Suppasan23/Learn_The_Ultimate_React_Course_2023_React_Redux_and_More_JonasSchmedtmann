@@ -11,7 +11,10 @@ function Customer() {
   function handleClick(e) {
     e.preventDefault();
     if(!fullName || !nationalId) return;
-    dispatch(createCustomer(fullName, nationalId));
+    dispatch(createCustomer({
+      sendFullName: fullName, 
+      sendNationalId: nationalId
+    }));
   }
 
   return (
