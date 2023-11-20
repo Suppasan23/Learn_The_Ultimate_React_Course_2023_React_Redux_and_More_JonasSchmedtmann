@@ -26,7 +26,7 @@ function Customer() {
 
         <div>
           <label>Customer full name</label>
-          <input value={fullName} onChange={(e) => setFullName(e.target.value)}/>
+          <input value={fullName} onChange={(e)=> setFullName(e.target.value)}></input>
         </div>
 
         <div>
