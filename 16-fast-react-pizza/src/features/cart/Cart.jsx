@@ -33,6 +33,8 @@ function Cart() {
 
       <h2>Your cart, %NAME%</h2>
 
+      <p>{cart[0].name}</p>
+
       <div>
         <Link to="/order/new">Order pizzas</Link>
         <button>Clear cart</button>

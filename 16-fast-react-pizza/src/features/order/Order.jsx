@@ -57,6 +57,8 @@ function Order() {
   return (
     <div>
       <div>
+        <p>{id}{cart}</p>
+
         <h2>Status</h2>
 
         <div>
