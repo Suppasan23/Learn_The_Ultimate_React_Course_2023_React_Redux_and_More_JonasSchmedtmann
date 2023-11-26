@@ -9,6 +9,8 @@ function Header() {
             <SearchOrder/>
 
             <p>Shrek</p>
+
+            <hr></hr>
         </header>
     )
 }

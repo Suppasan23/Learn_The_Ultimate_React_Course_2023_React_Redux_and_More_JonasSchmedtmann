@@ -23,9 +23,10 @@ function Order() {
   return (
     <div>
       <div>
-        <p>{id} &quot;{cart[0].name}&quot;</p>
-
+        
         <h2>Status</h2>
+        
+        <p>{id} &quot;{/* cart[0].name */}&quot;</p>
 
         <div>
           {priority && <span>Priority</span>}
@@ -53,7 +54,7 @@ function Order() {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader({ params }) {
-  console.log(`params is = ${params.orderId}`)
+  //console.log(`params is = ${params.orderId}`)
   const order = await getOrder(params.orderId);
   return order;
 }
