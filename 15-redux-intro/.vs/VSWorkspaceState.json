@@ -6,5 +6,6 @@
     "\\src\\features\\accounts",
     "\\src\\features\\customers"
   ],
+  "SelectedNode": "\\src\\features\\customers\\customerSlice.js",
   "PreviewInSolutionExplorer": false
 }
