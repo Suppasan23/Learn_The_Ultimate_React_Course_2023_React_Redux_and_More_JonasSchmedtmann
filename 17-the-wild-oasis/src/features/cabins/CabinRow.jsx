@@ -99,7 +99,12 @@ function CabinRow({ cabin }) {
         </div>
       </TableRow>
 
-      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
+      {showForm && (
+        <CreateCabinForm
+          onCloseEditForm={() => setShowform(false)}
+          cabinToEdit={cabin}
+        />
+      )}
     </>
   );
 }

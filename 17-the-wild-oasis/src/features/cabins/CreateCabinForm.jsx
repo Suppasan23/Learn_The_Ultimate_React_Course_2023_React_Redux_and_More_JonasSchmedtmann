@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ onCloseModal, onCloseEditForm, cabinToEdit = {} }) {
   const { createCabin, isCreating } = useCreateCabin();
   const { editCabin, isEditing } = useEditCabin();
 
@@ -34,12 +34,22 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     if (isEditSession)
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
-        { onSuccess: (data) => reset() }
+        {
+          onSuccess: (data) => {
+            reset();
+            theCloseForm(1);
+          },
+        }
       );
     else
       createCabin(
         { ...data, image: data.image[0] },
-        { onSuccess: (data) => reset() }
+        {
+          onSuccess: (data) => {
+            reset();
+            theCloseForm(2);
+          },
+        }
       );
   }
 
@@ -47,8 +57,19 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     //console.log(errors);
   }
 
+  function theCloseForm(code) {
+    if (code === 1) {
+      onCloseEditForm?.();
+    } else {
+      onCloseModal?.();
+    }
+  }
+
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      type={isEditSession ? "regular" : "modal"}
+    >
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -133,11 +154,15 @@ function CreateCabinForm({ cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
-          Cancel
-        </Button>
         <Button disabled={isWorking}>
           {isEditSession ? "Edit cabin" : "Create new cabin"}
+        </Button>
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => theCloseForm(isEditSession ? 1 : 2)}
+        >
+          Cancel
         </Button>
       </FormRow>
     </Form>

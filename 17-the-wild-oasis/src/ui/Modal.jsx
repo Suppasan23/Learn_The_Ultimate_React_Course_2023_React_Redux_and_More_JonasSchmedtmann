@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -10,6 +13,12 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
+  border: solid 1px;
+`;
+
+const StyleCloseButtonLocation = styled.div`
+  text-align: right;
+  margin-bottom: 10px;
 `;
 
 const Overlay = styled.div`
@@ -48,3 +57,22 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
+
+function Modal({ onClose, children }) {
+  return (
+    <>
+      <Overlay>
+        <StyledModal>
+          <StyleCloseButtonLocation>
+            <Button onClick={onClose}>
+              <HiXMark />
+            </Button>
+          </StyleCloseButtonLocation>
+          {children}
+        </StyledModal>
+      </Overlay>
+    </>
+  );
+}
+
+export default Modal;
