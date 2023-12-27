@@ -12,7 +12,8 @@ const Form = styled.form`
       border-left: 1px solid;
       border-right: 1px solid;
       border-bottom: 1px solid;
-      border-radius: var(--border-radius-md);
+      border-bottom-left-radius: var(--border-radius-md);
+      border-bottom-right-radius: var(--border-radius-md);
     `}
 
   ${(props) =>

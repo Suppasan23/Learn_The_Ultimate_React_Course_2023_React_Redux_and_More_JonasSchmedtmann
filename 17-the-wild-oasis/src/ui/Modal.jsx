@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
 import styled from "styled-components";
 
@@ -59,19 +60,19 @@ const Button = styled.button`
 `;
 
 function Modal({ onClose, children }) {
-  return (
-    <>
-      <Overlay>
-        <StyledModal>
-          <StyleCloseButtonLocation>
-            <Button onClick={onClose}>
-              <HiXMark />
-            </Button>
-          </StyleCloseButtonLocation>
-          {children}
-        </StyledModal>
-      </Overlay>
-    </>
+  return createPortal(
+    <Overlay>
+      <StyledModal>
+        <StyleCloseButtonLocation>
+          <Button onClick={onClose}>
+            <HiXMark />
+          </Button>
+        </StyleCloseButtonLocation>
+
+        <div>{children}</div>
+      </StyledModal>
+    </Overlay>,
+    document.body
   );
 }
 
