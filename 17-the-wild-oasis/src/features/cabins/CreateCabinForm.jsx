@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
+import { useForm } from "react-hook-form";
 
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
@@ -8,24 +7,20 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 
-import { useForm } from "react-hook-form";
 import { useCreateCabin } from "./useCreateCabin";
 import { useEditCabin } from "./useEditCabin";
 
-function CreateCabinForm({ onCloseModal, onCloseEditForm, cabinToEdit = {} }) {
-  const { createCabin, isCreating } = useCreateCabin();
-  const { editCabin, isEditing } = useEditCabin();
-
+function CreateCabinForm({ cabinToEdit = {} }) {
+  const { isCreating, createCabin } = useCreateCabin();
+  const { isEditing, editCabin } = useEditCabin();
   const isWorking = isCreating || isEditing;
 
-  const { id: editId, ...editValue } = cabinToEdit;
-
+  const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
 
   const { register, handleSubmit, reset, getValues, formState } = useForm({
-    defaultValues: isEditSession ? editValue : {},
+    defaultValues: isEditSession ? editValues : {},
   });
-
   const { errors } = formState;
 
   function onSubmit(data) {
@@ -37,39 +32,26 @@ function CreateCabinForm({ onCloseModal, onCloseEditForm, cabinToEdit = {} }) {
         {
           onSuccess: (data) => {
             reset();
-            theCloseForm(1);
           },
         }
       );
     else
       createCabin(
-        { ...data, image: data.image[0] },
+        { ...data, image: image },
         {
           onSuccess: (data) => {
             reset();
-            theCloseForm(2);
           },
         }
       );
   }
 
   function onError(errors) {
-    //console.log(errors);
-  }
-
-  function theCloseForm(code) {
-    if (code === 1) {
-      onCloseEditForm?.();
-    } else {
-      onCloseModal?.();
-    }
+    // console.log(errors);
   }
 
   return (
-    <Form
-      onSubmit={handleSubmit(onSubmit, onError)}
-      type={isEditSession ? "regular" : "modal"}
-    >
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -115,8 +97,8 @@ function CreateCabinForm({ onCloseModal, onCloseEditForm, cabinToEdit = {} }) {
         <Input
           type="number"
           id="discount"
-          defaultValue={0}
           disabled={isWorking}
+          defaultValue={0}
           {...register("discount", {
             required: "This field is required",
             validate: (value) =>
@@ -128,7 +110,6 @@ function CreateCabinForm({ onCloseModal, onCloseEditForm, cabinToEdit = {} }) {
 
       <FormRow
         label="Description for website"
-        disabled={isWorking}
         error={errors?.description?.message}
       >
         <Textarea
@@ -154,15 +135,11 @@ function CreateCabinForm({ onCloseModal, onCloseEditForm, cabinToEdit = {} }) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
+        <Button variation="secondary" type="reset">
+          Cancel
+        </Button>
         <Button disabled={isWorking}>
           {isEditSession ? "Edit cabin" : "Create new cabin"}
-        </Button>
-        <Button
-          variation="secondary"
-          type="reset"
-          onClick={() => theCloseForm(isEditSession ? 1 : 2)}
-        >
-          Cancel
         </Button>
       </FormRow>
     </Form>

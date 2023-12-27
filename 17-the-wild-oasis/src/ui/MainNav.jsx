@@ -8,15 +8,13 @@ import {
   HiOutlineUsers,
 } from "react-icons/hi2";
 
-// eslint-disable-next-line no-unused-vars
 const NavList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 `;
 
-// eslint-disable-next-line no-unused-vars
-const StyleNavLink = styled(NavLink)`
+const StyledNavLink = styled(NavLink)`
   &:link,
   &:visited {
     display: flex;
@@ -60,34 +58,34 @@ function MainNav() {
     <nav>
       <NavList>
         <li>
-          <StyleNavLink to="/dashboard">
+          <StyledNavLink to="/dashboard">
             <HiOutlineHome />
             <span>Home</span>
-          </StyleNavLink>
+          </StyledNavLink>
         </li>
         <li>
-          <StyleNavLink to="/bookings">
+          <StyledNavLink to="/bookings">
             <HiOutlineCalendarDays />
             <span>Bookings</span>
-          </StyleNavLink>
+          </StyledNavLink>
         </li>
         <li>
-          <StyleNavLink to="/cabins">
+          <StyledNavLink to="/cabins">
             <HiOutlineHomeModern />
-            <span>Cabin</span>
-          </StyleNavLink>
+            <span>Cabins</span>
+          </StyledNavLink>
         </li>
         <li>
-          <StyleNavLink to="/users">
+          <StyledNavLink to="/users">
             <HiOutlineUsers />
             <span>Users</span>
-          </StyleNavLink>
+          </StyledNavLink>
         </li>
         <li>
-          <StyleNavLink to="/settings">
+          <StyledNavLink to="/settings">
             <HiOutlineCog6Tooth />
             <span>Settings</span>
-          </StyleNavLink>
+          </StyledNavLink>
         </li>
       </NavList>
     </nav>

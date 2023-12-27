@@ -15,7 +15,6 @@ function UpdateSettingsForm() {
       breakfastPrice,
     } = {},
   } = useSettings();
-
   const { isUpdating, updateSetting } = useUpdateSetting();
 
   if (isLoading) return <Spinner />;
@@ -25,8 +24,6 @@ function UpdateSettingsForm() {
 
     if (!value) return;
     updateSetting({ [field]: value });
-
-    return;
   }
 
   return (
@@ -35,8 +32,8 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="min-nights"
-          disabled={isUpdating}
           defaultValue={minBookingLength}
+          disabled={isUpdating}
           onBlur={(e) => handleUpdate(e, "minBookingLength")}
         />
       </FormRow>
@@ -45,8 +42,8 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="max-nights"
-          disabled={isUpdating}
           defaultValue={maxBookingLength}
+          disabled={isUpdating}
           onBlur={(e) => handleUpdate(e, "maxBookingLength")}
         />
       </FormRow>
@@ -55,8 +52,8 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="max-guests"
-          disabled={isUpdating}
           defaultValue={maxGuestsPerBooking}
+          disabled={isUpdating}
           onBlur={(e) => handleUpdate(e, "maxGuestsPerBooking")}
         />
       </FormRow>
@@ -65,8 +62,8 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="breakfast-price"
-          disabled={isUpdating}
           defaultValue={breakfastPrice}
+          disabled={isUpdating}
           onBlur={(e) => handleUpdate(e, "breakfastPrice")}
         />
       </FormRow>
