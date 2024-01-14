@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
-import {
-  HiArrowDownOnSquare,
-  HiArrowUpOnSquare,
-  HiEye,
-  HiTrash,
-} from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import { HiEye } from "react-icons/hi2";
+import { TfiCheck } from "react-icons/tfi";
+import { MdLogout } from "react-icons/md";
+import { FaUserCheck } from "react-icons/fa";
 
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
@@ -108,10 +106,20 @@ function BookingRow({
 
           {status === "unconfirmed" && (
             <Menus.Button
-              icon={<HiArrowDownOnSquare />}
+              icon={<FaUserCheck />}
               onClick={() => navigate(`/checkin/${bookingId}`)}
             >
               Check in
+            </Menus.Button>
+          )}
+
+          {status === "checked-in" && (
+            <Menus.Button
+              icon={<MdLogout />}
+              onClick={() => checkout(bookingId)}
+              disabled={isCheckingOut}
+            >
+              Check Out
             </Menus.Button>
           )}
         </Menus.List>
