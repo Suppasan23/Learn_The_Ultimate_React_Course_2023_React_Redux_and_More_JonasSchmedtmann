@@ -18,6 +18,7 @@ import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
 import Empty from "../../ui/Empty";
+import { AiFillDelete } from "react-icons/ai";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -73,9 +74,17 @@ function BookingDetail() {
           </Button>
         )}
 
+        <Button
+          icon={<AiFillDelete />}
+          onClick={() => deleteBooking(bookingId)}
+          disabled={isDeleting}
+        >
+          Delete
+        </Button>
+
         <Modal>
           <Modal.Open opens="delete">
-            <Button variation="danger">Delete booking</Button>
+            <Button variation="danger">Delete</Button>
           </Modal.Open>
 
           <Modal.Window name="delete">
