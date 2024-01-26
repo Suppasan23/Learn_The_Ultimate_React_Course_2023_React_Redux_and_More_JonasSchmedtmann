@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
+import {
+  HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
+  HiEye,
+  HiTrash,
+} from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
-import { HiEye } from "react-icons/hi2";
-import { TfiCheck } from "react-icons/tfi";
-import { MdLogout } from "react-icons/md";
-import { FaUserCheck } from "react-icons/fa";
-import { AiFillDelete } from "react-icons/ai";
 
 import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
@@ -108,7 +109,7 @@ function BookingRow({
 
             {status === "unconfirmed" && (
               <Menus.Button
-                icon={<FaUserCheck />}
+                icon={<HiArrowDownOnSquare />}
                 onClick={() => navigate(`/checkin/${bookingId}`)}
               >
                 Check in
@@ -117,16 +118,16 @@ function BookingRow({
 
             {status === "checked-in" && (
               <Menus.Button
-                icon={<MdLogout />}
+                icon={<HiArrowUpOnSquare />}
                 onClick={() => checkout(bookingId)}
                 disabled={isCheckingOut}
               >
-                Check Out
+                Check out
               </Menus.Button>
             )}
 
             <Modal.Open opens="delete">
-              <Menus.Button icon={<AiFillDelete />}>Delete</Menus.Button>
+              <Menus.Button icon={<HiTrash />}>Delete booking</Menus.Button>
             </Modal.Open>
           </Menus.List>
         </Menus.Menu>
@@ -134,8 +135,8 @@ function BookingRow({
         <Modal.Window name="delete">
           <ConfirmDelete
             resourceName="booking"
-            onConfirm={() => deleteBooking(bookingId)}
             disabled={isDeleting}
+            onConfirm={() => deleteBooking(bookingId)}
           />
         </Modal.Window>
       </Modal>
